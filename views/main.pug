@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+  head
+    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(type='text/javascript').
+      $(document).ready(function(){
+        var alFlag = false
+        var psFlag = false
+        $("#al_main").click(function() { 
+          alFlag = !alFlag
+          if(alFlag) $("#algo").css("display", "block")
+          else $("#algo").css("display", "none")
+        })
+        $("#ps_main").click(function() { psFlag = !psFlag })
+      })
+  body
+    h1 WELCOME TO CORDERS
+    #page_list
+      ul
+        li
+          a#al_main(href="#" ) Algorithm
+        li
+          a#ps_main(href="#") Problem Solving
+    div#algo(style="display:none")
+      include algorithm.pug
+    div#ps
+      include ps.pug
+    
+    
