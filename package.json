@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "mssql": "^5.1.0",
     "ngrok": "^3.2.5",
     "pug": "^2.0.4",
     "serve": "^11.1.0"
