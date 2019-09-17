@@ -1,29 +1,41 @@
 doctype html
 html(lang='en')
   head
+    style
+      include ../main.css
     script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
     script(type='text/javascript').
       $(document).ready(function(){
-        var alFlag = false
-        var psFlag = false
+        var alFlag = true
+        var psFlag = true
         $("#al_main").click(function() { 
           alFlag = !alFlag
-          if(alFlag) $("#algo").css("display", "block")
-          else $("#algo").css("display", "none")
+          if(alFlag) $("#algo").animate({
+          width:"toggle"
         })
-        $("#ps_main").click(function() { psFlag = !psFlag })
+        //- .css("display", "inline-block")
+          else $("#algo").animate({
+          width:"toggle"
+        })
+            //- .css("display", "none")
+        })
+        $("#ps_main").click(function() {
+          psFlag = !psFlag 
+          if(psFlag) $("#ps").css("display", "inline-block")
+          else $("#ps").css("display", "none")
+          })
       })
   body
-    h1 WELCOME TO CORDERS
-    #page_list
-      ul
-        li
-          a#al_main(href="#" ) Algorithm
-        li
-          a#ps_main(href="#") Problem Solving
-    div#algo(style="display:none")
-      include algorithm.pug
-    div#ps
-      include ps.pug
-    
-    
+    #page
+      h1 WELCOME TO CORDERS
+      #page_list
+        ul
+          li
+            a#al_main(href="#" ) Algorithm
+          li
+            a#ps_main(href="#") Problem Solving
+      #content
+        #algo
+          include algorithm.pug
+        #ps
+          include ps.pug

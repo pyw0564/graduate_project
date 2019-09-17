@@ -56,6 +56,4 @@ app.post('/form_receive', function(req, res) {
   });
 });
 
-app.listen(3000, function(err) {
-  console.log('Connected!');
-})
+app.listen(3000, "0.0.0.0")
