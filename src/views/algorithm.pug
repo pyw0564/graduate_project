@@ -1,22 +1,45 @@
 doctype html
 html
   head
+    style
+      include ../../css/algorithm.css
     script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(type='text/javascript').
+      $(document).ready(function(){
+      
+        var aaa = "'This code is <strong>not</strong> escaped!'"
+        console.log(aaa)
+        var algorithm_list = !{JSON.stringify(algorithm_list)}
+        var recursiveMakeAlgorithmList = function(object) {
+            let ret = ''
+            for (let key in object) {
+              ret += '<div><a href="#">' + key
+              ret += recursiveMakeAlgorithmList(object[key])
+              ret += '</a></div>'
+            }
+            return ret;
+        }
+        let ret = recursiveMakeAlgorithmList(algorithm_list)
+        console.log(ret)
+      })
   body
-    h1 Welcome to Algorithm!
-    #algorithm_content
-      #basic.algolist Basic
-        ol
-          li
-            a 엄궁동
-          li 
-            a 크하하하
-          li
-            a 메이플
-      #advanced.algolist Advanced
-        ol
-          li
-            a 스패닝 트리
+    #algorithm_page
+      #algorithm_top
+        h1 Welcome to Algorithm!
+      #algorithm_content
+        p= ret
+        #basic.algolist Basic
+          ol
+            li
+              a 엄궁동
+            li 
+              a 크하하하
+            li
+              a 메이플
+        #advanced.algolist Advanced
+          ol
+            li
+              a 스패닝 트리
           
       
     

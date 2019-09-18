@@ -1,7 +1,4 @@
-require('dotenv').config({
-  path: __dirname + '/../.env'
-})
-const config = require('./global')
+const data = require('./data')
 const express = require('express')
 const app = express()
 const fs = require('fs')
@@ -10,83 +7,19 @@ const spawn = require('child_process').spawn;
 const bodyParser = require('body-parser');
 app.set('view engine', 'pug');
 app.set('views', './views');
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
+app.locals.pretty = true;
 
-const sqlConfig = config.sqlConfig
-async function readDB() {
-  // SQL 접속
-  console.log('SQL Connecting. . .')
-  let pool = await sql.connect(sqlConfig)
-
-  // ref 파일 생성
-  var path = __dirname + '/../ref'
-  await mkdir(path);
-
-  // algorithms 파일 생성
-  const path_algo = path + '/algorithms'
-  await mkdir(path_algo);
-
-  let result = await pool.request().query(`SELECT * FROM algorithms`)
-  verification(path_algo, result.recordset, 'tableName');
-
-  for (let i = 0; i < result.recordset.length; i++) {
-    let record = result.recordset[i];
-    await mkdir(path_algo + '/' + record.tableName)
-    for (let j = 0; j < )
-  }
-}
-async function recursiveMakeDir(path, dirName) {
-  await mkdir(path)
-  let pool = await sql.connect(sqlConfig)
-  let result = await pool.request().query(`SELECT tableName FROM ${dirName}`)
-  await sql.close()
-
-  for (let i = 0; i < result.recordset.length; i++) {
-    let record = result.recordset[i]
-    if (record.tableName) {
-      let nextPath = path + '/' + record.tableName
-      recursiveMakeDir(nextPath, record.tableName)
-    }
-  }
-}
-readDB()
-async function mkdir(path) {
-  if (!fs.existsSync(path))
-    fs.mkdirSync(path);
-}
-async function verification(path, recordset, key) {
-  let dirs = fs.readdirSync(path)
-  for (let i = 0; i < dirs.length; i++) {
-    let dir = dirs[i]
-    let flag = false
-    for (let j = 0; j < recordset.length; j++) {
-      let record = recordset[j][key]
-      if (dir == record) flag = true
-    }
-    if (flag == false) {
-      await deleteFolderRecursive(path + '/' + dir)
-    }
-  }
-}
-var deleteFolderRecursive = async function(path) {
-  if (fs.existsSync(path)) {
-    fs.readdirSync(path).forEach(async function(file) {
-      var curPath = path + "/" + file;
-      if (fs.lstatSync(curPath).isDirectory()) { // recurse
-        await deleteFolderRecursive(curPath);
-      } else { // delete file
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(path);
-  }
-};
+const sqlConfig = data.sqlConfig
+const readDB = data.readDB
+const algorithm_list = data.algorithm_list
 app.get('/', async function(req, res) {
-  res.render("main")
+  await readDB()
+  res.render("main",{
+    algorithm_list : algorithm_list,
+  })
 })
 app.get('/algorithm', function(req, res) {
   res.render('main')

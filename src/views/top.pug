@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    style
+      include ../../css/top.css
+    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(type='text/javascript').
+      $(document).ready(function(){
+        var alFlag = true
+        var psFlag = true
+        $("#algorithm_btn").click(function() { 
+          $("#algorithm_page").animate({
+            width : "toggle"
+          })
+        })
+        $("#ps_btn").click(function() {
+          psFlag = !psFlag 
+          if (psFlag) $("#ps_page").css("display", "inline-block")
+          else $("#ps_page").css("display", "none")
+          })
+      })
+  body
+    #top
+      #top_banner
+        h1 WELCOME TO CORDERS
+      #top_page_list
+        a#algorithm_btn.menu(href="#") Algorithm
+        a#ps_btn.menu(href="#") Problem Solving

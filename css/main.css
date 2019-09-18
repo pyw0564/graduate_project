@@ -15,12 +15,14 @@ body {
   justify-content: center;
   background-color: #e5e5e7;
 }
-#content{
+
+#main_page {
+  width: 100%;
+  height: 100%;
+}
+
+#content {
+  width: 100%;
+  height : 100%;
   display: inline-flex;
-}
-#al_main{
-  display: inline-block;
-}
-#ps_main{
-  display: inline-block;
 }
