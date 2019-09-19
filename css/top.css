@@ -1,7 +1,8 @@
 #top {
-  width:100%;
-  height:15%;
-  text-align: center
+  width: 100%;
+  overflow: auto;
+  text-align: center;
+  padding-bottom: 20px;
 }
 
 #top_page_list {
@@ -19,8 +20,8 @@ a.menu {
   border: 1px solid black;
 }
 
-a:link,
-a:visited,
-a:hover {
+a.menu:link,
+a.menu:visited,
+a.menu:hover {
   color: black;
 }

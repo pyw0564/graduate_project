@@ -113,6 +113,18 @@ async function sqlQuery(query) {
     await sql.close()
   })
 }
+
+function recursiveMakeAlgorithmList(object) {
+  let ret = '<ol>'
+  for (let key in object) {
+    ret += `<li><a href="#" id=${key} class='algorithmMenu'>${key}</a>`
+    ret += recursiveMakeAlgorithmList(object[key])
+    ret += '</li>'
+  }
+  ret += '</ol>'
+  return ret;
+}
 exports.sqlConfig = sqlConfig
 exports.readDB = readDB
 exports.algorithm_list = algorithm_list
+exports.recursiveMakeAlgorithmList = recursiveMakeAlgorithmList

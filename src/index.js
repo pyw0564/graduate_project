@@ -15,10 +15,11 @@ app.locals.pretty = true;
 const sqlConfig = data.sqlConfig
 const readDB = data.readDB
 const algorithm_list = data.algorithm_list
+const recursiveMakeAlgorithmList = data.recursiveMakeAlgorithmList
 app.get('/', async function(req, res) {
   await readDB()
   res.render("main",{
-    algorithm_list : algorithm_list,
+    algorithm_list : recursiveMakeAlgorithmList(algorithm_list),
   })
 })
 app.get('/algorithm', function(req, res) {
@@ -27,6 +28,12 @@ app.get('/algorithm', function(req, res) {
 app.get('/ps', function(req, res) {
   res.render('main')
 })
+app.post('/algorithm/:algorithmName', function(req, res){
+  let algorithmName = req.params.algorithmName
+  console.log(algorithmName)
+  res.json(algorithmName)
+})
+
 app.post('/form_receive', function(req, res) {
   var code = req.body.code;
   var source = code.split(/\r\n|\r\n/).join("\n");

@@ -3,21 +3,19 @@ html
   head
     style
       include ../../css/top.css
-    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
     script(type='text/javascript').
       $(document).ready(function(){
-        var alFlag = true
-        var psFlag = true
-        $("#algorithm_btn").click(function() { 
+        var algorithm_flag = true
+        $("#algorithm_btn").click(function() {
           $("#algorithm_page").animate({
-            width : "toggle"
-          })
+            width: "toggle"
+          }, 1000)
         })
         $("#ps_btn").click(function() {
-          psFlag = !psFlag 
-          if (psFlag) $("#ps_page").css("display", "inline-block")
-          else $("#ps_page").css("display", "none")
-          })
+          $("#ps_page").animate({
+            width : "toggle"
+          }, 1000)
+        })
       })
   body
     #top
