@@ -20,14 +20,15 @@ const readDB = data.readDB
 const algorithm_list = data.algorithm_list
 const recursiveMakeAlgorithmList = data.recursiveMakeAlgorithmList
 app.get('/', async function(req, res) {
-  await readDB()
   res.render("main", {
     type: 'main',
-    algorithm_list: recursiveMakeAlgorithmList(algorithm_list),
   })
 })
-app.get('/algorithm', function(req, res) {
+app.get('/algorithm', async function(req, res) {
+  console.log(algorithm_list)
+  await readDB()
   res.render('algorithm_page', {
+    algorithmName : 'algorithms',
     type: 'main',
     algorithm_list: recursiveMakeAlgorithmList(algorithm_list)
   })
@@ -35,7 +36,30 @@ app.get('/algorithm', function(req, res) {
 app.get('/ps', function(req, res) {
   res.render('ps')
 })
-
+app.get('/algorithm/create', function(req, res){
+  const hidden = req.query.parent
+  res.render('algorithm_create', {
+    tableName : hidden
+  })
+})
+app.post('/algorithm/create', async function(req, res){
+  const name = req.body.name
+  const tableName = req.body.tableName
+  console.log(name, tableName)
+  const query = `INSERT INTO algorithms VALUES('${name}','${tableName}')`
+  await (async => {
+    return new sql.ConnectionPool(sqlConfig).connect().then(pool => {
+      return pool.request().query(query)
+      }).then(async result =>{
+        sql.close()
+        console.log("table 생성 완료!")
+      }).catch(err => {
+        console.log(err)
+        sql.close()
+      })
+  })()
+  res.redirect('/algorithm')
+})
 app.post('/algorithm/:algorithmName', function(req, res) {
   let algorithmName = req.params.algorithmName
   let render = pug.renderFile('views/' + algorithmName + '.pug')

@@ -38,7 +38,7 @@ async function readDB() {
 async function recursiveMakeDir(path, dirName, object) {
   await mkdir(path)
   try {
-    let result = await sqlQuery(`SELECT tableName FROM ${dirName}`)
+    let result = await sqlQuery(`SELECT * FROM ${dirName}`)
     if (result.recordset.length == 0) {
       let dirs = fs.readdirSync(path)
       for (let i = 0; i < dirs.length; i++) {
@@ -49,9 +49,12 @@ async function recursiveMakeDir(path, dirName, object) {
     for (let i = 0; i < result.recordset.length; i++) {
       await verification(path, result.recordset);
       let record = result.recordset[i]
+      console.log('결과-----------------',record)
       if (record.tableName) {
+        console.log(record)
         let nextPath = path + '/' + record.tableName
         object[record.tableName] = {}
+        object[record.tableName].ko = record.name
         await recursiveMakeDir(nextPath, record.tableName, object[record.tableName])
       } else {
         console.log('no tableName props!!')
@@ -117,9 +120,11 @@ async function sqlQuery(query) {
 function recursiveMakeAlgorithmList(object) {
   let ret = '<ol>'
   for (let key in object) {
-    ret += `<li><a href="#" id=${key} class='algorithmMenu'>${key}</a>`
-    ret += recursiveMakeAlgorithmList(object[key])
-    ret += '</li>'
+    if(object[key].ko){
+      ret += `<li><a href="#" id=${key} class='algorithmMenu'>${object[key].ko}</a>`
+      ret += recursiveMakeAlgorithmList(object[key])
+      ret += '</li>'
+    }
   }
   ret += '</ol>'
   return ret;

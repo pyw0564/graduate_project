@@ -3,6 +3,8 @@ html(lang='en')
   head
     style
       include ../../css/ps.css
+    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(type='text/javascript' src="./bower_components/taboverride/build/output/taboverride.js")
   body
     #ps_page
       h1 문제1
@@ -18,21 +20,27 @@ html(lang='en')
       input#ajax_post(type = 'button' value='제출하기' class='ajaxsend')
       p
       script.
-        document.querySelector('.ajaxsend').addEventListener('click',function(){
-          sendAjax('http://localhost:3000/form_receive',code.value);
-        })
-        function sendAjax(url,data,language){
-          var data = {'code': data};
-          data = JSON.stringify(data);
-          var xhr = new XMLHttpRequest();
-        xhr.open('POST',url,true);
-            xhr.setRequestHeader('Content-type','application/json');
-            xhr.send(data);
+        $(document).ready(function(){
+          var textarea = document.getElementById('code')
+          tabOverride.set(textarea)
+          console.log("1")
+          document.querySelector('.ajaxsend').addEventListener('click',function(){
+            sendAjax('http://localhost:3000/form_receive',code.value);
+          })
+          function sendAjax(url,data,language){
+            var data = {'code': data};
+            data = JSON.stringify(data);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST',url,true);
+              xhr.setRequestHeader('Content-type','application/json');
+              xhr.send(data);
 
-            xhr.addEventListener('load',function() {
-              var result = JSON.parse(xhr.responseText);
-              if(result.result !='ok')return;
-              document.getElementById('output').value=result.output;
-            });
-          }
+              xhr.addEventListener('load',function() {
+                var result = JSON.parse(xhr.responseText);
+                if(result.result !='ok')return;
+                document.getElementById('output').value=result.output;
+              });
+            }
+        })
+          
       p
