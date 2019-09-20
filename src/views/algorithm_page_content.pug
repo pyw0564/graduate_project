@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(type='text/javascript' src="./bower_components/taboverride/build/output/taboverride.js")
+    script.
+      $(document).ready(function(){
+        var textarea = document.getElementById('textarea')
+        tabOverride.set(textarea)
+      })
+  body
+    #algorithm_content
+    -if(type=='main') {
+      p!= algorithm_list
+    -} else {
+      p!= html
+    -}
+    textarea#textarea(style="width:500px; height:300px")

@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    script.
+      $(document).ready(function(){
+        var stack = []
+        var sp = 0
+        $('.algorithmMenu').click(function(e){
+          stack[sp++] = e.target.id
+        })
+        $('#algorithm_prev').click(function(){
+            
+            window.location.href()
+        })
+      })
+  body
+    #algorithm_top
+      -if(type=='main') {
+        h1 Welcome to Algorithm
+      -} else {
+        h1 Hi! #{algorithmName}
+      -}
+      a#algorithm_prev.algorithmBtn(href='#') Prev
+      a#algorithm_next.algorithmBtn(href='#') Next

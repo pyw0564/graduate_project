@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    style
+      include ../../css/algorithm.css
+    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(type='text/javascript').
+      $(document).ready(function(){
+        $(".algorithmMenu").click(function(e){
+          sendAjax(`/algorithm/${e.target.id}`, e.target.id);
+        })
+        function sendAjax(url, data, lang){
+          var data = {'code': data }
+          data = JSON.stringify(data)
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type', 'application/json')
+          xhr.send(data)
+          
+          xhr.addEventListener('load', function(){
+            var result = xhr.responseText
+            console.log('결과왔소', result)
+            $('#algorithm_page').html(result)
+          })
+        }
+      })
+  body
+    #algorithm_page
+      include algorithm_page_top
+      include algorithm_page_content

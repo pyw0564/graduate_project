@@ -1,0 +1,16 @@
+{
+  "name": "taboverride",
+  "version": "4.0.3",
+  "main": "./build/output/taboverride.js",
+  "homepage": "https://github.com/wjbryant/taboverride",
+  "_release": "4.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.0.3",
+    "commit": "02238ec1ab098cb998dcb3c1c38d39316e2ac03d"
+  },
+  "_source": "https://github.com/wjbryant/taboverride.git",
+  "_target": "^4.0.3",
+  "_originalSource": "taboverride",
+  "_direct": true
+}

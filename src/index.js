@@ -1,15 +1,18 @@
 const data = require('./data')
 const express = require('express')
 const app = express()
+const pug = require('pug')
 const fs = require('fs')
 const sql = require('mssql')
 const spawn = require('child_process').spawn;
 const bodyParser = require('body-parser');
 app.set('view engine', 'pug');
 app.set('views', './views');
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/../'));
 app.locals.pretty = true;
 
 const sqlConfig = data.sqlConfig
@@ -18,20 +21,28 @@ const algorithm_list = data.algorithm_list
 const recursiveMakeAlgorithmList = data.recursiveMakeAlgorithmList
 app.get('/', async function(req, res) {
   await readDB()
-  res.render("main",{
-    algorithm_list : recursiveMakeAlgorithmList(algorithm_list),
+  res.render("main", {
+    type: 'main',
+    algorithm_list: recursiveMakeAlgorithmList(algorithm_list),
   })
 })
 app.get('/algorithm', function(req, res) {
-  res.render('main')
+  res.render('algorithm_page', {
+    type: 'main',
+    algorithm_list: recursiveMakeAlgorithmList(algorithm_list)
+  })
 })
 app.get('/ps', function(req, res) {
-  res.render('main')
+  res.render('ps')
 })
-app.post('/algorithm/:algorithmName', function(req, res){
+
+app.post('/algorithm/:algorithmName', function(req, res) {
   let algorithmName = req.params.algorithmName
-  console.log(algorithmName)
-  res.json(algorithmName)
+  let render = pug.renderFile('views/' + algorithmName + '.pug')
+  res.render('algorithm_page', {
+    algorithmName : algorithmName,
+    html : render
+  })
 })
 
 app.post('/form_receive', function(req, res) {

@@ -28,3 +28,16 @@ body {
   overflow: visible;
   display: inline-flex;
 }
+
+#algorithm_iframe {
+  border: 1px solid black;
+  white-space: nowrap;
+  width:100%;
+  height:100%;
+}
+#ps_iframe {
+  border: 1px solid black;
+  white-space: nowrap;
+  width:100%;
+  height:100%;
+}

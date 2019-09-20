@@ -8,5 +8,7 @@ html(lang='en')
     #main_page
       include top.pug
       #content
-          include algorithm.pug
+        iframe(src='/algorithm')#algorithm_iframe
+          include algorithm_page.pug
+        iframe(src='/ps')#ps_iframe
           include ps.pug

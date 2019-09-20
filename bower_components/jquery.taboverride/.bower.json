@@ -1,0 +1,20 @@
+{
+  "name": "jquery.taboverride",
+  "version": "4.0.0",
+  "main": "./build/jquery.taboverride.js",
+  "dependencies": {
+    "jquery": ">=1.7.0 <2.0.0",
+    "taboverride": ">=4.0.0 <5.0.0"
+  },
+  "homepage": "https://github.com/wjbryant/jquery.taboverride",
+  "_release": "4.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.0.0",
+    "commit": "69000191facf4cdd4b1a84c547998594176d8c92"
+  },
+  "_source": "https://github.com/wjbryant/jquery.taboverride.git",
+  "_target": "^4.0.0",
+  "_originalSource": "jquery.taboverride",
+  "_direct": true
+}
