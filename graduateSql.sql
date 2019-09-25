@@ -4,38 +4,41 @@ GO
 drop table algorithms
 
 CREATE TABLE algorithms(
-	name NVARCHAR(100) NOT NULL,
-	tableName NVARCHAR(100) NOT NULL,
-	constraint PK_algorithm PRIMARY KEY(name, tableName)
+	_type NVARCHAR(100) NOT NULL,
+	name NVARCHAR(100),
+	tableName NVARCHAR(100),
+	content NVARCHAR(MAX)
 )
 
 DELETE FROM algorithms;
+DELETE FROM algorithms WHERE _type = 'content';
 
-INSERT INTO algorithms VALUES('기본 알고리즘', 'basicAlgorithm')
-INSERT INTO algorithms VALUES('고급 알고리즘', 'advancedAlgorithm')
-INSERT INTO algorithms VALUES('안고급 알고리즘', 'notadvancedAlgorithm')
-INSERT INTO algorithms VALUES('안고급 알고리즘2', 'not2advancedAlgorithm')
+INSERT INTO algorithms VALUES('sub','기본 알고리즘', 'basicAlgorithm', '')
+INSERT INTO algorithms VALUES('sub','고급 알고리즘', 'advancedAlgorithm', '')
+INSERT INTO algorithms VALUES('sub','안고급 알고리즘', 'notadvancedAlgorithm', '')
+INSERT INTO algorithms VALUES('sub','안고급 알고리즘2', 'not2advancedAlgorithm', '')
 
 GO
 
 
 drop table basicAlgorithm
-CREATE TABLE basicAlgorithm (
-	name NVARCHAR(100) NOT NULL,
-	tableName NVARCHAR(100) NOT NULL
-	constraint PK_basicAlgorithm PRIMARY KEY(name, tableName)
-)
-INSERT INTO basicAlgorithm VALUES('완전탐색', 'exhaustive')
-GO
-
-
-CREATE TABLE exhaustive(
-	name NVARCHAR(100) NOT NULL,
+CREATE TABLE basicAlgorithm(
 	_type NVARCHAR(100) NOT NULL,
-	_file NVARCHAR(MAX),
-	link NVARCHAR(MAX)
+	name NVARCHAR(100),
+	tableName NVARCHAR(100),
+	content NVARCHAR(MAX)
 )
+INSERT INTO basicAlgorithm VALUES('sub','완전탐색','exhaustive','')
 GO
+
+
+drop table exhaustive
+CREATE TABLE exhaustive(
+	_type NVARCHAR(100) NOT NULL,
+	name NVARCHAR(100),
+	tableName NVARCHAR(100),
+	content NVARCHAR(MAX)
+)
 
 SELECT * FROM algorithms;
 SELECT * FROM basicAlgorithm;

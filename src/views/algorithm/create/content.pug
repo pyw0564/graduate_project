@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+  
+  body
+    h1 Create Content in #{tableName} By Pug 
+    form#createTable(method='post' active='/algorithm/createContent')
+      p 내용
+        textarea#content(cols='40' rows='30' name='content')
+      p
+        input#submit(type='submit' value='등록')

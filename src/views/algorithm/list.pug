@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    script(type='text/javascript').
+      $(document).ready(function(){
+        var algorithmName = !{JSON.stringify(algorithmName)}
+        var algorithmName_ko = !{JSON.stringify(algorithmName_ko)}
+        var algorithm_list = !{JSON.stringify(algorithm_list)}
+        $(".algorithmMenu").click(function(e){
+          e.preventDefault();
+          sendAjax(`/algorithm/${e.target.id}`, e.target.id);
+        })
+        function sendAjax(url, e){
+          var data = {
+            algorithmName: e,
+            algorithmName_ko : algorithm_list[e].ko,
+            algorithm_list: algorithm_list[e],
+          }
+          data = JSON.stringify(data)
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type', 'application/json')
+          xhr.send(data)
+          
+          xhr.addEventListener('load', function(){
+            var result = xhr.responseText
+            result = JSON.parse(result)
+            var arr = document.querySelectorAll('#content > script')
+            for (let i = 0; i < arr.length; i++) arr[i].outerHTML = ''
+            document.querySelector('#algorithm_page').outerHTML = result
+            arr = document.getElementsByTagName('script')
+            for (let i = 0; i < arr.length; i++) {
+              eval(arr[i].innerHTML) //run script inside div
+            }
+          })
+        }
+      })
+  body
+    #algorithm_content_list
+      p!= algorithm_content_list

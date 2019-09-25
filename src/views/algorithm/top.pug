@@ -1,0 +1,46 @@
+doctype html
+html
+  head
+    script.
+      $(document).ready(function(){
+        var algorithmName = !{JSON.stringify(algorithmName)}
+        var algorithmName_ko = !{JSON.stringify(algorithmName_ko)}
+        var algorithm_list = !{JSON.stringify(algorithm_list)}
+        var algorithm_content = !{JSON.stringify(algorithm_content)}
+        var algorithm_content_list = !{JSON.stringify(algorithm_content_list)}
+        $("#createList").click(function(e){
+          e.preventDefault()
+          var xhr = new XMLHttpRequest()
+          var url = '/algorithm/createList'
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type', 'application/json')
+          xhr.send(JSON.stringify({ 
+            parent : algorithmName,
+            algorithmName_ko : algorithmName_ko,
+          }))
+        
+          xhr.addEventListener('load', function(){
+            var url = '/algorithm/createList'
+            var result = xhr.responseText
+            result = JSON.parse(result)
+            console.log(result)
+            var arr = document.querySelectorAll('#content > script')
+            for (var i = 0; i < arr.length; i++) {
+                arr[i].outerHTML = ''
+            }
+            document.querySelector('#algorithm_page').innerHTML = result
+            
+            arr = document.getElementsByTagName('script')
+            for (var n = 0; n < arr.length; n++) {
+                eval(arr[n].innerHTML)//run script inside div
+            }
+          })
+        })
+      })
+  body
+    #algorithm_top
+      h1 Hello #{algorithmName_ko} !
+      //-a#algorithm_prev.algorithmBtn(href='#') Prev
+      //-a#algorithm_next.algorithmBtn(href='#') Next
+      a#createList(href="") createList
+      a#createContent(href="") createContent

@@ -2,17 +2,17 @@ doctype html
 html
   head
     style
-      include ../../css/top.css
+      include ./../../css/top.css
     script(type='text/javascript').
       $(document).ready(function(){
         var algorithm_flag = true
         $("#algorithm_btn").click(function() {
-          $("#algorithm_iframe").animate({
+          $("#algorithm_page").animate({
             width: "toggle"
           }, 1000)
         })
         $("#ps_btn").click(function() {
-          $("#ps_iframe").animate({
+          $("#ps_page").animate({
             width : "toggle"
           }, 1000)
         })
@@ -22,5 +22,5 @@ html
       #top_banner
         h1 WELCOME TO CORDERS
       #top_page_list
-        a#algorithm_btn.menu(href="#") Algorithm
-        a#ps_btn.menu(href="#") Problem Solving
+        a#algorithm_btn.menu(href="") Algorithm
+        a#ps_btn.menu(href="") Problem Solving

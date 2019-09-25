@@ -2,13 +2,13 @@ doctype html
 html(lang='en')
   head
     style
-      include ../../css/main.css
-    script(type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+      include ./../../css/main.css
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
   body
     #main_page
       include top.pug
       #content
-        iframe(src='/algorithm')#algorithm_iframe
-          include algorithm_page.pug
-        //-iframe(src='/ps')#ps_iframe
-          include ps.pug
+        #algorithm
+          include ./algorithm/main.pug
+        //- #ps
+        //- include ps.pug

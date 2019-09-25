@@ -49,28 +49,26 @@ async function recursiveMakeDir(path, dirName, object) {
     for (let i = 0; i < result.recordset.length; i++) {
       await verification(path, result.recordset);
       let record = result.recordset[i]
-      console.log('결과-----------------',record)
-      if (record.tableName) {
-        console.log(record)
+      if (record._type == 'sub') {
         let nextPath = path + '/' + record.tableName
         object[record.tableName] = {}
         object[record.tableName].ko = record.name
         await recursiveMakeDir(nextPath, record.tableName, object[record.tableName])
       } else {
-        console.log('no tableName props!!')
+        object.content = record.content
         // base case..
       }
     }
     return
   } catch (err) {
-    console.log('recursiveMakeDir 에러 ~', dirName)
+    // console.log('recursiveMakeDir 에러 ~', dirName)
     return
   }
 }
 
 async function mkdir(path) {
   if (!fs.existsSync(path)) {
-    await console.log('폴더 생성', path)
+    // await console.log('폴더 생성', path)
     await fs.mkdirSync(path)
   }
 }
@@ -112,16 +110,27 @@ async function sqlQuery(query) {
     await sql.close()
     return result
   }).catch(async err => {
-    console.log("쿼리에러~", query)
+    // console.log("쿼리에러~", query)
     await sql.close()
   })
+}
+
+function makeAlgorithmList(object) {
+  let ret = '<ol>'
+  for (let key in object) {
+    if (object[key].ko) {
+      ret += `<li><a href="" id=${key} class='algorithmMenu'>${object[key].ko}</a>` + '</li>'
+    }
+  }
+  ret += '</ol>'
+  return ret;
 }
 
 function recursiveMakeAlgorithmList(object) {
   let ret = '<ol>'
   for (let key in object) {
-    if(object[key].ko){
-      ret += `<li><a href="#" id=${key} class='algorithmMenu'>${object[key].ko}</a>`
+    if (object[key].ko) {
+      ret += `<li><a href="" id=${key} class='algorithmMenu'>${object[key].ko}</a>`
       ret += recursiveMakeAlgorithmList(object[key])
       ret += '</li>'
     }
@@ -129,7 +138,10 @@ function recursiveMakeAlgorithmList(object) {
   ret += '</ol>'
   return ret;
 }
+
+exports.sqlQuery = sqlQuery
 exports.sqlConfig = sqlConfig
 exports.readDB = readDB
 exports.algorithm_list = algorithm_list
 exports.recursiveMakeAlgorithmList = recursiveMakeAlgorithmList
+exports.makeAlgorithmList = makeAlgorithmList
