@@ -1,21 +1,25 @@
 doctype html
 html
   head
+    style
+      include ./../../../../css/algorithm/create.css
+  
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script.
-      $(document).ready(function(){
-          var parent = !{JSON.stringify(parent)}
-          $("#CreateHidden").val(parent)
-      })
   body
-    h1|"
-      =algorithmName_ko
-      |"에서 링크생성하기 
-    form#createTable(action='/algorithm/create/list' method='post')
-      input(type='hidden' id='CreateHidden' name='parent' value=algorithmName_ko)
-      p 한글 이름
-        input#name(type='text' name='name')
-      p 테이블 이름
-        input#tableName(type='text' name='tableName')
-      p
-        input#submit(type='submit' value='등록')
+    include ./../backfront.pug
+    #algorithm_top
+      #algorithm_top_banner
+        h1|"
+          =algorithmName_ko
+          |"에서 리스트 생성하기
+    include ./../list.pug
+    #algorithm_content
+      form#createTable(action='/algorithm/createList/post' method='post')
+        input(type='hidden' id='CreateHidden' name='parent' value=parent)
+        p 한글 이름 :
+          input#name(type='text' name='name')
+        p 테이블 이름 :
+          input#tableName(type='text' name='tableName')
+        p
+          input#submit(type='submit' value='등록')

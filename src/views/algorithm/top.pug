@@ -8,39 +8,82 @@ html
         var algorithm_list = !{JSON.stringify(algorithm_list)}
         var algorithm_content = !{JSON.stringify(algorithm_content)}
         var algorithm_content_list = !{JSON.stringify(algorithm_content_list)}
-        $("#createList").click(function(e){
+        
+        $("#algorithm_create").click(function(e){
           e.preventDefault()
-          var xhr = new XMLHttpRequest()
-          var url = '/algorithm/createList'
-          xhr.open('POST', url, true)
-          xhr.setRequestHeader('Content-type', 'application/json')
-          xhr.send(JSON.stringify({ 
+          var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+          var data = JSON.stringify({ 
             parent : algorithmName,
             algorithmName_ko : algorithmName_ko,
-          }))
+            algorithm_list : algorithm_list,
+            algorithm_content_list : algorithm_content_list
+          })
+          var url = ''
+          if (form == 'list') url = '/algorithm/createList'
+          else if (form == 'content') url = '/algorithm/createContent'
+          else {
+            alert('생성은 리스트와 내용만 가능합니다')  
+            return
+          }
+          sendAjax(url, data)
+        })
         
-          xhr.addEventListener('load', function(){
-            var url = '/algorithm/createList'
-            var result = xhr.responseText
-            result = JSON.parse(result)
-            console.log(result)
-            var arr = document.querySelectorAll('#content > script')
-            for (var i = 0; i < arr.length; i++) {
-                arr[i].outerHTML = ''
+        $('#algorithm_delete').click(function(e){
+          e.preventDefault()
+          var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+          var data = JSON.stringify({ 
+            parent : algorithmName,
+            algorithmName_ko : algorithmName_ko,
+            algorithm_list : algorithm_list,
+            algorithm_content_list : algorithm_content_list
+          })
+          var url = ''
+          if (form == 'list') url = '/algorithm/delete/list'
+          else if (form == 'content') url = '/algorithm/delete/content'
+          else if (form == 'table') url = '/algorithm/delete/table'
+          else return
+          sendAjax(url, data)
+        })
+        
+        function sendAjax(url, data){
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type', 'application/json')
+          xhr.send(data)
+          
+          xhr.addEventListener('load', function() {
+            var result = JSON.parse(xhr.responseText)
+            if (result.result == 'NO') {
+              alert(result.err)
+              return
             }
+            else if(result.result == 'YES'){
+              alert("삭제 완료")
+              location.href = '/'
+              return
+            }
+            var arr = document.querySelectorAll('#algorithm > script')
+            for (var i = 0; i < arr.length; i++) arr[i].outerHTML = ''
             document.querySelector('#algorithm_page').innerHTML = result
-            
             arr = document.getElementsByTagName('script')
-            for (var n = 0; n < arr.length; n++) {
-                eval(arr[n].innerHTML)//run script inside div
+            for (var i = 0; i < arr.length; i++) {
+              eval(arr[i].innerHTML) //run script inside div
             }
           })
-        })
+        }
       })
   body
     #algorithm_top
-      h1 Hello #{algorithmName_ko} !
-      //-a#algorithm_prev.algorithmBtn(href='#') Prev
-      //-a#algorithm_next.algorithmBtn(href='#') Next
-      a#createList(href="") createList
-      a#createContent(href="") createContent
+      #algorithm_top_banner
+        h1 Hello #{algorithmName_ko} !
+      #algorithm_top_function
+        form#algorithm_top_form(method='post')
+          #algorithm_top_radio
+            input(type='radio' name='choose' value='list' checked)
+            |리스트
+            input(type='radio' name='choose' value='content')
+            |내용
+          #algorithm_top_btns
+            input#algorithm_create.algorithm_top_Btn(type='submit' value='생성')
+            input#algorithm_modify.algorithm_top_Btn(type='submit' value='수정')
+            input#algorithm_delete.algorithm_top_Btn(type='submit' value='삭제')

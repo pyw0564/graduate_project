@@ -2,11 +2,20 @@ doctype html
 html
   head
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
-  
+    script(type='text/javascript' src="./bower_components/taboverride/build/output/taboverride.js")
+    script.
+      $(document).ready(function(){
+        var txt = document.getElementById('txt');
+        tabOverride.set(txt);
+      })
   body
-    h1 Create Content in #{tableName} By Pug 
-    form#createTable(method='post' active='/algorithm/createContent')
+    h1| "
+      = algorithmName_ko
+      | "에서 내용생성
+      | By Pug 
+    form#createTable(method='post' action='/algorithm/createContent/post')
+      input(type='hidden' id='CreateHidden' name='parent' value=parent)
       p 내용
-        textarea#content(cols='40' rows='30' name='content')
+        textarea#txt(cols='100' rows='30' name='txt')
       p
         input#submit(type='submit' value='등록')

@@ -40,8 +40,23 @@ app.get('/', async function(req, res) {
 app.get('/ps', function(req, res) {
   res.render('ps')
 })
-// DB 생성
-app.post('/algorithm/create/list', async function(req, res) {
+
+// 리스트 생성
+app.post('/algorithm/createList', async function(req, res) {
+  const parent = req.body.parent
+  const algorithmName_ko = req.body.algorithmName_ko
+  const algorithm_list = req.body.algorithm_list
+  const algorithm_content_list = req.body.algorithm_content_list
+  let render = pug.renderFile('./views/algorithm/create/list.pug', {
+    parent: parent,
+    algorithmName_ko: algorithmName_ko,
+    algorithm_content_list: algorithm_content_list,
+    algorithm_list : algorithm_list
+  })
+  res.json(render)
+})
+// 리스트 DB 생성
+app.post('/algorithm/createList/post', async function(req, res) {
   const name = req.body.name
   const tableName = req.body.tableName
   const parent = req.body.parent
@@ -59,57 +74,81 @@ app.post('/algorithm/create/list', async function(req, res) {
   await sqlQuery(tableQuery)
   res.redirect('/')
 })
-// 리스트 생성
-app.post('/algorithm/createList', async function(req, res) {
+
+// 내용 생성
+app.post('/algorithm/createContent', async function(req, res) {
   const parent = req.body.parent
   const algorithmName_ko = req.body.algorithmName_ko
-  console.log(parent)
-  let render = pug.renderFile('./views/algorithm/create/list.pug', {
+  let contentCheck = await sqlQuery(`SELECT * FROM ${parent} WHERE _type='content'`)
+  if (contentCheck.recordset.length) {
+    res.json({
+      result: 'NO',
+      err: '이미 내용이 존재합니다'
+    })
+    return;
+  }
+  let render = pug.renderFile('./views/algorithm/create/content.pug', {
     parent: parent,
     algorithmName_ko: algorithmName_ko,
   })
   res.json(render)
 })
-
-
-app.get('/algorithm/createContent', async function(req, res) {
-  const parent = req.query.parent
-  res.render('algorithm_createContent', {
-    tableName: parent
-  })
-})
-app.post('/algorithm/createContent', async function(req, res) {
-  const content = req.body.content
-  const query = `INSERT INTO algorithms VALUES('content', '', '', '${content}');`
-  await (async =>{
-    return new sql.ConnectionPool(sqlConfig).connect().then(pool => {
-      return pool.request().query(query)
-    }).then(async result => {
-      sql.close()
-      console.log("컨텐츠 삽입 완료!")
-    }).catch(err => {
-      console.log('컨텐츠 삽입 실패', err)
-      sql.close()
-    })
-  })()
+// 내용 DB 생성
+app.post('/algorithm/createContent/post', async function(req, res) {
+  const content = req.body.txt
+  const parent = req.body.parent
+  const query = `INSERT INTO ${parent} VALUES('content', '', '', '${content}');`
+  sqlQuery(query)
   res.redirect('/')
 })
+// 리스트 수정
+app.post('/algorithm/modifyList', async function(req, res) {
 
-// app.get('/algorithm', async function(req, res) {
-//   await readDB()
-//   var algorithmName = 'Algorithms'
-//   var algorithm_path = 'algorithm'
-//   const algorithm_content_list = makeAlgorithmList(algorithm_list)
-//   console.log(algorithm_list)
-//
-//   res.render('algorithm', {
-//     type: 'main',
-//     algorithmName: algorithmName,
-//     algorithm_list_object: algorithm_list,
-//     algorithm_content_list: algorithm_content_list
-//   })
-// })
+})
+app.post('/algorithm/deleteList', async function(req, res){
+  const algorithmName_ko = req.body.algorithmName_ko
+  const algorithm_list = req.body.algorithm_list
+  const algorithm_content_list = req.body.algorithm_content_list
+  const tableName = req.body.tableName
 
+  console.log("hi", tableName)
+})
+app.post('/algorithm/delete/:form', async function(req, res) {
+  const parent = req.body.parent
+  const algorithmName_ko = req.body.algorithmName_ko
+  const algorithm_list = req.body.algorithm_list
+  const algorithm_content_list = req.body.algorithm_content_list
+  const form = req.params.form
+  console.log('hi', form)
+  if (form == 'list') {
+    let render = pug.renderFile('./views/algorithm/delete/list.pug', {
+      algorithmName_ko: undefinedCheck(algorithmName_ko),
+      algorithm_list: undefinedCheck(algorithm_list),
+      algorithm_content_list: undefinedCheck(algorithm_content_list)
+    })
+    res.json(render)
+    return
+  } else if (form == 'content') {
+    let selectQuery = `SELECT * FROM ${parent} WHERE _type='content'`
+    let ret = await sqlQuery(selectQuery)
+    if (ret.recordset.length) {
+      let deleteQuery = `DELETE FROM ${parent} WHERE _type='content'`
+      await sqlQuery(deleteQuery)
+      res.json({
+        result: "YES",
+      })
+      return
+    } else {
+      res.json({
+        result: "NO",
+        err: "현재 내용이 존재하지 않습니다"
+      })
+    }
+  } else if (form == 'table') {
+
+  } else return
+})
+// 리스트
 app.post('/algorithm/:algorithmName', async function(req, res) {
   var object = {
     algorithmName: undefinedCheck(req.body.algorithmName),

@@ -40,7 +40,3 @@ CREATE TABLE exhaustive(
 	content NVARCHAR(MAX)
 )
 
-SELECT * FROM algorithms;
-SELECT * FROM basicAlgorithm;
-SELECT * FROM exhaustive;
-GO

@@ -23,6 +23,7 @@ const sqlConfig = {
 var algorithm_list = {}
 
 async function readDB() {
+  for(let item in algorithm_list) delete algorithm_list[item]
   // SQL 접속
   console.log('SQL Connecting. . .')
   // ref 파일 생성
@@ -119,7 +120,10 @@ function makeAlgorithmList(object) {
   let ret = '<ol>'
   for (let key in object) {
     if (object[key].ko) {
-      ret += `<li><a href="" id=${key} class='algorithmMenu'>${object[key].ko}</a>` + '</li>'
+      ret += `
+      <li class='algorithmMenu_li'>
+        <a href="" id=${key} class='algorithmMenu'>${object[key].ko}</a>
+      </li>`
     }
   }
   ret += '</ol>'

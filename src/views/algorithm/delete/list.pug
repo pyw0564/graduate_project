@@ -1,0 +1,68 @@
+doctype html
+html
+  head
+    style
+  
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+      $(document).ready(function(){
+        var algorithmName_ko = !{JSON.stringify(algorithmName_ko)}
+        var algorithm_list = !{JSON.stringify(algorithm_list)}
+        var algorithm_content_list = !{JSON.stringify(algorithm_content_list)}
+        $('#deleteList_submit').click(function(e){
+          e.preventDefault()
+          var form = $('#deleteList')[0]
+          var tableName = form.name.value == undefined ? null : form.name.value
+          var url = '/algorithm/deleteList'
+          var data =  JSON.stringify({ 
+            tableName : tableName,
+            algorithmName_ko : algorithmName_ko,
+            algorithm_list : algorithm_list,
+            algorithm_content_list : algorithm_content_list
+          })
+          console.log(data)
+          sendAjax(url, data)
+        })
+        
+        function sendAjax(url, data){
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type', 'application/json')
+          xhr.send(data)
+          
+          xhr.addEventListener('load', function() {
+            var result = JSON.parse(xhr.responseText)
+            if (result.result == 'NO') {
+              alert(result.err)
+              return
+            }
+            else if(result.result == 'YES'){
+              alert("삭제 완료")
+              location.href = '/'
+              return
+            }
+            var arr = document.querySelectorAll('#algorithm > script')
+            for (var i = 0; i < arr.length; i++) arr[i].outerHTML = ''
+            document.querySelector('#algorithm_page').innerHTML = result
+            arr = document.getElementsByTagName('script')
+            for (var i = 0; i < arr.length; i++) {
+              eval(arr[i].innerHTML) //run script inside div
+            }
+          })
+        }
+      })
+  body
+    include ./../backfront.pug
+    #algorithm_top
+      #algorithm_top_banner
+        h1|"
+          =algorithmName_ko
+          |"에서 리스트 삭제하기
+    include ./../list.pug
+    #algorithm_content
+      form#deleteList(method='post')
+        input(type='hidden' id='CreateHidden' name='parent' value=parent)
+        p 삭제 할 테이블 이름 : 
+          input(type='text' name='name')
+        p
+          input#deleteList_submit(type='submit' value='삭제')

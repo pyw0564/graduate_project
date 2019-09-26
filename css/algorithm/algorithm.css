@@ -1,0 +1,93 @@
+/* 여기부터 algorithm top */
+.algorithm_top_Btn {
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+}
+
+.algorithm_top_Btn:link,
+.algorithm_top_Btn:visited,
+.algorithm_top_Btn:hover {
+  color: black;
+}
+
+.algorithm_top_Btn {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  margin-left: 5px;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  text-decoration: none;
+  font-family: serif;
+}
+
+#algorithm_top {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+#backfront_page {
+  width: 100%;
+}
+
+#algorithm_top_banner {
+  width: 100%;
+}
+
+#algorithm_top_function {
+  width: 100%;
+  align-content: center;
+  display: block;
+}
+
+#algorithm_top_form {
+  display: block;
+}
+
+#algorithm_top_radio {
+  background-color: #ffff01;
+  margin: 10px;
+  margin-bottom: 20px;
+}
+
+#algorithm_top_btns {
+  margin: 10px;
+}
+
+/* 여기부터 content list */
+#algorithm_content_list {
+  margin-top: 30px;
+  border: 1px solid black;
+}
+
+a.algorithmMenu {
+  margin-bottom: 50px;
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+}
+
+a.algorithmMenu:link,
+a.algorithmMenu:visited,
+a.algorithmMenu:hover {
+  color: black;
+}
+
+.algorithmMenu_li {
+  margin: 10px;
+}
+
+/* 여기부터 content */
+#algorithm_content {
+  margin-top: 30px;
+  border: 1px solid black;
+  padding: 20px;
+}
