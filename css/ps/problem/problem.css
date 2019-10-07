@@ -1,0 +1,11 @@
+#ps_content_table {
+  background-color: #12ff21;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ps_content_table th {
+  padding-left: 20px;
+  padding-right: 20px;
+}

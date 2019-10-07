@@ -1,0 +1,48 @@
+#ps_page {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #ff0000A0;
+  display: inline-flex;
+}
+#ps_list{
+  margin:10px;
+  background-color:blue;
+}
+#ps_content{
+  width: 100%;
+  height: 100%;
+  margin: 10px;
+  background-color: #11aa00;
+}
+#ps_main_banner, #ps_content{
+  overflow: auto;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+}
+.ps_list > a {
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+}
+
+.ps_list > a:link,
+.ps_list > a:visited,
+.ps_list > a:hover {
+  color: black;
+}
+
+.ps_list {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  margin-left: 5px;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  text-decoration: none;
+  font-family: serif;
+}

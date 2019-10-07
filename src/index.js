@@ -11,6 +11,7 @@ app.set('views', './views');
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../'));
 app.locals.pretty = true;
@@ -51,7 +52,7 @@ app.post('/algorithm/createList', async function(req, res) {
     parent: parent,
     algorithmName_ko: algorithmName_ko,
     algorithm_content_list: algorithm_content_list,
-    algorithm_list : algorithm_list
+    algorithm_list: algorithm_list
   })
   res.json(render)
 })
@@ -105,7 +106,7 @@ app.post('/algorithm/createContent/post', async function(req, res) {
 app.post('/algorithm/modifyList', async function(req, res) {
 
 })
-app.post('/algorithm/deleteList', async function(req, res){
+app.post('/algorithm/deleteList', async function(req, res) {
   const algorithmName_ko = req.body.algorithmName_ko
   const algorithm_list = req.body.algorithm_list
   const algorithm_content_list = req.body.algorithm_content_list
@@ -197,6 +198,39 @@ app.post('/form_receive', function(req, res) {
     }
   });
 });
+
+app.get('/problem', function(req, res) {
+  let table = {}
+  let path = './../problem'
+  let problems = fs.readdirSync(path)
+  for (let i = 0; i < problems.length; i++) {
+    let number = problems[i]
+    if (table[number] == undefined)
+      table[number] = {}
+    let pb = fs.readdirSync(path + '/' + number)
+    for (let j = 0; j < pb.length; j++) {
+      let dot = pb[j].lastIndexOf('.')
+      if (dot == -1) continue
+      let name = pb[j].substring(0, dot)
+      let type = pb[j].substring(dot + 1)
+      if (type == 'txt') {
+        table[number].name = name
+        table[number].download = './problem/' + number + '/' + pb[j]
+      }
+    }
+  }
+  console.log(table)
+  res.render('./ps/problem/problem', {
+    table : table
+  })
+})
+app.get('/rank', function(req, res) {
+  res.render('./ps/rank/rank')
+})
+app.get('/notice', function(req, res) {
+  res.render('./ps/notice/notice')
+})
+
 
 function undefinedCheck(o) {
   return o == undefined ? null : o

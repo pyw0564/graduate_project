@@ -1,0 +1,17 @@
+doctype html
+html(lang='en')
+  head
+    style
+      include ./../../../../css/ps/ps.css
+      include ./../../../../css/main.css
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+  body
+    #main_page
+      include ./../../top.pug
+      #content
+        #algorithm
+          include ./../../algorithm/main.pug
+        #ps
+          #ps_page
+            include ./../left.pug
+            include problem_content.pug

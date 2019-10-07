@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    style
+      include ./../../../../css/ps/problem/problem.css
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+    body
+    #ps_content
+      h1 문제 페이지 입니다.
+      table#ps_content_table
+        tr
+          th Number
+          th Problem Name
+          th download
+          th submit
+        each val, index in table
+          tr
+            td= index
+            td= table[index].name
+            td
+              a(href=`/problem/download/`+index) 다운로드
+            td 
+              a(href='/problem/submit/') 제출하기
