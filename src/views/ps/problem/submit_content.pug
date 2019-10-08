@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    style
+      include ./../../../../css/ps/problem/problem.css
+      include ./../../../../css/ps/problem/submit.css
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(type='text/javascript' src="./../../bower_components/taboverride/build/output/taboverride.js")
+    script.
+      $(document).ready(function(){
+        var name = !{JSON.stringify(name)}
+        var number = !{JSON.stringify(number)}
+        var textarea = document.getElementById('code')
+        tabOverride.set(textarea)
+        document.querySelector('.ajaxsend').addEventListener('click',function(){
+          document.getElementById('output').value = ""
+          sendAjax('/problem/score/' + number, code.value)
+        })
+        function sendAjax(url,data,language){
+          var data = {'code': data}
+          data = JSON.stringify(data)
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST',url,true)
+          xhr.setRequestHeader('Content-type','application/json')
+          xhr.send(data)
+
+          xhr.addEventListener('load',function() {
+            var result = JSON.parse(xhr.responseText)
+            document.getElementById('output').value= result.result + "\n" + result.output;
+          });
+        }
+      })
+    body
+      #ps_content
+        #submit_content
+          h1
+            = name
+            |  제출하기
+          h3
+            = number
+            |  번 문제
+          p 언어선택
+            select#language(name='language')
+              option(name='1') C
+              option(name='2') C++
+          textarea#code(style='resize:none' name='code')
+          p
+          textarea#output(name='output' style='resize:none;' readonly='readonly')
+          p
+          input#ajax_post(type='button' value='제출하기' class='ajaxsend')
+          p

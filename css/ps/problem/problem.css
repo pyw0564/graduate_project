@@ -9,3 +9,40 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
+.ps_download:link,
+.ps_download:visited,
+.ps_download:hover {
+  color: black;
+}
+
+.ps_download {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  text-decoration: none;
+}
+
+.ps_submit:link,
+.ps_submit:visited,
+.ps_submit:hover {
+  color: black;
+}
+
+.ps_submit {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  text-decoration: none;
+}
+
+td {
+  border: 1px solid black;
+  padding: 10px;
+  height: 30px;
+  background-color: #ffffff
+}

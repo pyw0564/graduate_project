@@ -2,8 +2,15 @@ const data = require('./data')
 const express = require('express')
 const app = express()
 const pug = require('pug')
+const execSync = require('child_process').execSync;
+const execFileSync = require('child_process').execFileSync;
+const exec = require('child_process').exec;
 const fs = require('fs')
+const util = require('util')
+const setTimeoutPromise = util.promisify(setTimeout);
 const sql = require('mssql')
+const path = require('path')
+const mime = require('mime')
 const spawn = require('child_process').spawn;
 const bodyParser = require('body-parser');
 app.set('view engine', 'pug');
@@ -163,40 +170,110 @@ app.post('/algorithm/:algorithmName', async function(req, res) {
 })
 
 
-app.post('/form_receive', function(req, res) {
-  var code = req.body.code;
+app.post('/problem/score/:number', function(req, res) {
+  var flag = {
+    flag: true
+  }
+  var timeCheck = function(flag) {
+    setTimeoutPromise(5000, flag).then((flag) => {
+      if (flag.flag) {
+        let responseData = {
+          'result': '시간 초과',
+          'output': 'TIME LIMIT EXCEED!!'
+        };
+        res.json(responseData)
+        res.end()
+      }
+    });
+  }
+  //timeCheck(flag)
+  let number = req.params.number
+  var code = req.body.code
   var source = code.split(/\r\n|\r\n/).join("\n");
   var file = 'test.c';
 
-  fs.writeFile(file, source, 'utf8', function(error) {
-    console.log('write end');
-  });
-  var compile = spawn('gcc', [file]);
-  compile.stdout.on('data', function(data) {
-    console.log('stdout: ' + data);
-  });
-  compile.stderr.on('data', function(data) {
-    console.log(String(data));
-  });
-  compile.on('close', function(data) {
-    if (data == 0) {
-      var run = spawn('./a.exe', []);
-      run.stdout.on('data', function(output) {
-        console.log('컴파일 완료');
-        var responseData = {
-          'result': 'ok',
-          'output': output.toString('utf8')
+
+  try {
+    fs.writeFileSync(file, source, 'utf8')
+    var compile = spawn('gcc', [file]);
+    compile.stdout.on('data', function(data) {
+      console.log('stdout: ' + data);
+    });
+    compile.stderr.on('data', function(data) {
+      console.log('컴파일 에러다!', String(data));
+      var responseData = {
+        'result': '컴파일 에러',
+        'output': data.toString('utf8')
+      };
+      console.log("전송~")
+      res.json(responseData);
+    });
+
+    compile.on('close', async function(data) {
+      flag.flag = false
+      if (data == 0) {
+        let data_path = './../problem/' + number + '/data'
+        let answer_path = './../problem/' + number + '/data'
+        let datadir = fs.readdirSync(data_path)
+        let answerdir = fs.readdirSync(answer_path)
+        console.log(datadir, answerdir)
+
+        // var cp = execFileSync('a.exe',['1 2'])
+        // console.log(String(cp))
+
+
+        // var cp = exec('a.exe', function(err, stdout, stderr) {
+        //   process.stdout.write(stdout);
+        //   process.stderr.write(stderr);
+        // });
+        // cp.stdin.write('1');
+        // cp.stdin.write(' 2');
+        // cp.stdin.end();
+        //
+        let count = 0
+        let responseData = {
+          'result': '성공',
+          'output': ''
         };
-        res.json(responseData);
-      });
-      run.stderr.on('data', function(output) {
-        console.log(String(output));
-      });
-      run.on('close', function(output) {
-        console.log('stdout: ' + output);
-      });
-    }
-  });
+        var complete = function() {
+          setTimeoutPromise(2000).then(() => {
+            console.log(count, datadir.length + 1)
+            if (count == datadir.length + 1) {
+              console.log(responseData)
+              res.json(responseData)
+              res.end()
+            }
+          });
+        }
+        complete()
+        for (let i = -1; i < datadir.length; i++) {
+          let run = spawn('./a.exe')
+          run.stdin.end('1 2')
+          run.stdout.on('data', function(output) {
+            console.log('컴파일 완료', String(output));
+            ++count
+            responseData.output += output.toString('utf8')
+          });
+          run.stderr.on('data', function(output) {
+            console.log('런타임 에러', String(output));
+            var responseData = {
+              'result': '런타임 에러',
+              'output': output.toString('utf8')
+            };
+            res.json(responseData)
+            res.end()
+            return
+          });
+          run.on('close', function(output) {
+            console.log('stdout: ' + output);
+          });
+        }
+
+      }
+    });
+  } catch (e) {
+    res.json(String(e))
+  }
 });
 
 app.get('/problem', function(req, res) {
@@ -221,7 +298,7 @@ app.get('/problem', function(req, res) {
   }
   console.log(table)
   res.render('./ps/problem/problem', {
-    table : table
+    table: table
   })
 })
 app.get('/rank', function(req, res) {
@@ -229,6 +306,41 @@ app.get('/rank', function(req, res) {
 })
 app.get('/notice', function(req, res) {
   res.render('./ps/notice/notice')
+})
+app.get('/problem/download/:number', function(req, res) {
+  let number = req.params.number
+  let path = './../problem/' + number
+  let pb = fs.readdirSync(path)
+  for (let i = 0; i < pb.length; i++) {
+    let dot = pb[i].lastIndexOf('.')
+    if (dot == -1) continue
+    let name = pb[i].substring(0, dot)
+    let type = pb[i].substring(dot + 1)
+    if (type == 'txt') {
+      console.log(__dirname + '/../problem/' + number + '/' + pb[i])
+      res.download(__dirname + '/../problem/' + number + '/' + pb[i])
+    }
+  }
+})
+
+app.get('/problem/submit/:number', function(req, res) {
+  let number = req.params.number
+  let path = './../problem/' + number
+  let pb = fs.readdirSync(path)
+  for (let i = 0; i < pb.length; i++) {
+    let dot = pb[i].lastIndexOf('.')
+    if (dot == -1) continue
+    let name = pb[i].substring(0, dot)
+    let type = pb[i].substring(dot + 1)
+    if (type == 'txt') {
+      res.render('./ps/problem/submit', {
+        name: name,
+        number: number
+      })
+      res.end()
+    }
+  }
+
 })
 
 

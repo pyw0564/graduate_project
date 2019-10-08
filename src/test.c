@@ -1,6 +1,7 @@
-#include<stdio.h>
+#include <stdio.h>
 
 int main(){
-	puts("123");
-	return 0;
+	int a, b;
+	scanf("%d %d", &a, &b);
+	printf("%d %d", a,b);
 }
