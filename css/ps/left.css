@@ -1,0 +1,93 @@
+/* LEFT CSS */
+#left {
+  width: 25%;
+  margin: 10px;
+  background-color: #ff232f00;
+}
+
+/* 로그인 Form */
+.login_input {
+  padding: 1px;
+}
+
+.login_button {
+  border: 1px solid #6284c7;
+  background-color: #6284c7;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#register_link {
+  vertical-align: bottom;
+  text-decoration: none;
+  background: #4E9CAF;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+#login {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#login_form {
+  display: inline-grid;
+}
+
+#login_form .login_input {
+  margin: 5px;
+}
+
+/* 로그인 후 */
+#login_id {
+  color: white;
+}
+
+#login_success {
+  padding: 10px;
+  overflow: auto;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* ps 메뉴 리스트 */
+#ps_list {
+  margin-top: 30px;
+}
+
+#ps_list #ps_list_menu {
+  background-color: black;
+  color: white;
+}
+
+.ps_list>a {
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+  border-radius: 5px;
+}
+
+.ps_list>a:link,
+.ps_list>a:visited,
+.ps_list>a:hover {
+  color: black;
+}
+
+.ps_list {
+  border-radius: 5px;
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  text-decoration: none;
+  font-family: serif;
+}

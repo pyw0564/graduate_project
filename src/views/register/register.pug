@@ -1,0 +1,33 @@
+html
+  head
+    style
+      include ./../../../css/register/register.css 
+  body
+    #register
+      h1#register_top CODERS에 어서오세요!
+      image(src='./public/niniz.gif')#register_main_picture
+      form(action='/register' method='post')#register_form
+        table#register_table
+          tr
+            td.register_input_name 아이디
+            td
+              input.register_input(type='text' name='id' placeholder='아이디')
+          tr
+            td.register_input_name 비밀번호
+            td
+              input.register_input(type='password' name='pw' placeholder='비밀번호')
+          tr  
+            td.register_input_name 이름
+            td
+              input.register_input(type='text' name='name' placeholder='이름')
+          tr
+            td.register_input_name 휴대폰
+            td
+              input.register_input(type='number' name='phone' placeholder='휴대폰')
+          tr
+            td(colspan='2')
+              input.register_button(type='submit' value='회원가입')
+              input.register_button(type='button' value='취소' onclick="location.href='/';")
+                
+            
+        

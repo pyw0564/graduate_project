@@ -2,13 +2,32 @@ doctype html
 html
   head
     style
+      include ./../../../css/ps/left.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
   body
     #left
+      a(href='/problem')
+        img(src='/public/login_banner.png')#login_banner
+      -if(!login_session) {
+        #login
+          form#login_form(action='/login' method='post')
+            input.login_input(type='text' name='id' placeholder='아이디')
+            input.login_input(type='password' name='pw' placeholder='비밀번호')
+            input.login_input.login_button(type='submit' value='로그인')
+            a#register_link(href='/register') 회원가입
+      -} else {
+         #login_success
+          h2
+            #login_id= id
+          h3 님 반갑습니다
+          form(action='/logout' method='post')
+            input.login_button(type='submit' value='로그아웃')
+      -}
       #ps_list
+        #ps_list_menu.ps_list 메뉴
         li.ps_list
-          a(href="/problem") 문제 풀기
+            a(href="/problem") 문제 풀기
         li.ps_list
-          a(href="/rank") 점수 확인
+          a(href="/problem/rank") 점수 확인
         li.ps_list
-          a(href="/notice") 공지사항
+          a(href="/problem/notice") 공지사항

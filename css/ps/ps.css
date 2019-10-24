@@ -2,47 +2,25 @@
   width: 100%;
   height: 100%;
   padding: 10px;
-  background-color: #ff0000A0;
+  background-color: #6578b3;
   display: inline-flex;
 }
-#ps_list{
-  margin:10px;
-  background-color:blue;
+
+#login_banner {
+  width: 100%;
+  height: auto;
 }
-#ps_content{
+
+#ps_content {
   width: 100%;
   height: 100%;
   margin: 10px;
-  background-color: #11aa00;
+  background-color: #f7f7ff;
 }
-#ps_main_banner, #ps_content{
+
+#ps_main_banner, #ps_content {
   overflow: auto;
   text-align: center;
   align-items: center;
   align-content: center;
-}
-.ps_list > a {
-  vertical-align: bottom;
-  text-decoration: none;
-  font-family: serif;
-}
-
-.ps_list > a:link,
-.ps_list > a:visited,
-.ps_list > a:hover {
-  color: black;
-}
-
-.ps_list {
-  vertical-align: middle;
-  text-align: center;
-  vertical-align: bottom;
-  width: auto;
-  height: auto;
-  margin-left: 5px;
-  padding: 10px;
-  border: 1px solid black;
-  background-color: white;
-  text-decoration: none;
-  font-family: serif;
 }

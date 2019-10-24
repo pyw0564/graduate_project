@@ -10,11 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "bower": "^1.8.8",
+    "connect-redis": "^4.0.3",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "mssql": "^5.1.0",
     "ngrok": "^3.2.5",
     "pug": "^2.0.4",
+    "redis": "^2.8.0",
     "serve": "^11.1.0"
   }
 }

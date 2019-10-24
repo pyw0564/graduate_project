@@ -17,10 +17,11 @@ html
           sendAjax('/problem/score/' + number, code.value)
         })
         function sendAjax(url,data,language){
-          var data = {'code': data}
+          console.log(url, data)
+          var data = { 'code' : data }
           data = JSON.stringify(data)
           var xhr = new XMLHttpRequest()
-          xhr.open('POST',url,true)
+          xhr.open('POST', url, true)
           xhr.setRequestHeader('Content-type','application/json')
           xhr.send(data)
 

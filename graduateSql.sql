@@ -1,6 +1,22 @@
 use GraduateProject;
 GO
 
+/* CREATE TABLES */
+CREATE TABLE Users(
+	id nvarchar(25) NOT NULL,
+	pw nvarchar(25) NOT NULL,
+	name nvarchar(25) NOT NULL,
+	phone nvarchar(25) NOT NULL
+	PRIMARY KEY(id)
+)
+
+/* SELECT TABLES */
+SELECT * FROM Users
+SELECT * FROM Users WHERE id='ab' AND pw = 'a'
+/* DROP TABLES */
+/*
+DROP TABLE Users
+*/
 drop table algorithms
 
 CREATE TABLE algorithms(

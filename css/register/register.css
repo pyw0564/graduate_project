@@ -1,0 +1,58 @@
+#register {
+  background-color: #6578b3;
+  text-align: center;
+}
+
+#register_top {
+  color: white;
+}
+
+#register_main_picture {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+}
+
+#register_form {
+  margin: 20px auto;
+  text-align: center;
+  width: 500px;
+  border-radius: 10px;
+  display: flex;
+  border: 1px solid white;
+}
+
+#register_table {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+#register_table td{
+  text-align: center;
+  padding: 20px;
+}
+.register_input_name {
+  width:1000px;
+  text-align: left;
+  font-size: 20px;
+  margin: 50px;
+  color: white;
+}
+
+.register_input {
+  text-align: left;
+  font-size: 17px;
+  margin-left: 50px;
+  color: black;
+}
+
+.register_button {
+  font-size: 20px;
+  border: 1px solid #6284c7;
+  background-color: #6284c7;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}

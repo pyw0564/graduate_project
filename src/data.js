@@ -33,7 +33,7 @@ async function readDB() {
     tableName: 'algorithms'
   }]);
   await recursiveMakeDir(path + '/' + 'algorithms', 'algorithms', algorithm_list)
-  console.log(algorithm_list)
+  //console.log(algorithm_list)
 }
 
 async function recursiveMakeDir(path, dirName, object) {
@@ -111,8 +111,8 @@ async function sqlQuery(query) {
     await sql.close()
     return result
   }).catch(async err => {
-    // console.log("쿼리에러~", query)
     await sql.close()
+    return err
   })
 }
 
