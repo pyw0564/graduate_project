@@ -1,19 +1,29 @@
 #ps_content_table {
-  background-color: #12ff21;
+  background-color: #6578b3;
   text-align: center;
   margin-left: auto;
+  border-radius: 5px;
   margin-right: auto;
 }
-
+/* 테이블 th */
 #ps_content_table th {
   padding-left: 20px;
   padding-right: 20px;
+  color: white;
+}
+/* 테이블 th */
+#ps_content_table td{
+  font-size: 20px;
+  font-weight: bold;
+}
+/* 다운로드 */
+.ps_download:link,
+.ps_download:hover {
+  color: #0072ff;
 }
 
-.ps_download:link,
-.ps_download:visited,
-.ps_download:hover {
-  color: black;
+.ps_download:visited {
+  color : #ff0000;
 }
 
 .ps_download {
@@ -28,7 +38,7 @@
 .ps_submit:link,
 .ps_submit:visited,
 .ps_submit:hover {
-  color: black;
+  color: #ff5959;
 }
 
 .ps_submit {
@@ -41,7 +51,7 @@
 }
 
 td {
-  border: 1px solid black;
+  border: 1px solid #6578b3;
   padding: 10px;
   height: 30px;
   background-color: #ffffff

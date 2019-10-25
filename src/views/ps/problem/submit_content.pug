@@ -4,22 +4,64 @@ html
     style
       include ./../../../../css/ps/problem/problem.css
       include ./../../../../css/ps/problem/submit.css
+      include ./../../../../bower_components/codemirror-5.49.2/lib/codemirror.css
+      include ./../../../../bower_components/codemirror-5.49.2/theme/monokai.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
-    script(type='text/javascript' src="./../../bower_components/taboverride/build/output/taboverride.js")
+    script(type='text/javascript' src="./../../bower_components/codemirror-5.49.2/lib/codemirror.js")
+    script(type='text/javascript' src="./../../bower_components/codemirror-5.49.2/mode/clike/clike.js")
     script.
-      $(document).ready(function(){
+      $(document).ready(function() {
         var name = !{JSON.stringify(name)}
         var number = !{JSON.stringify(number)}
+        var mode = !{JSON.stringify(mode)}
+
         var textarea = document.getElementById('code')
-        tabOverride.set(textarea)
-        document.querySelector('.ajaxsend').addEventListener('click',function(){
+        var send_time = 10, load_time = 10
+        var editor = CodeMirror.fromTextArea(textarea, {
+          lineNumbers: true,
+          mode:"text/x-csrc",
+          theme : "monokai"
+        });
+        var submit = document.getElementById('ajax_submit')
+        document.querySelector('#ajax_submit').addEventListener('click', function(e) {
+          if (send_time != 10){
+            e.preventDefault()
+            console.log("제출방지 되었습니다")
+            return
+          }
+          send_time = 10
           document.getElementById('output').value = ""
-          sendAjax('/problem/score/' + number, code.value)
+          sendAjax('/problem/score/' + number, editor.getValue())
+          var send_listen = setInterval(function(){
+            submit.value = send_time
+            if (--send_time < 0) {
+              submit.value = '제출하기'
+              send_time = 10
+              clearInterval(send_listen)
+            }
+          }, 1000);
         })
-        function sendAjax(url,data,language){
-          console.log(url, data)
-          var data = { 'code' : data }
-          data = JSON.stringify(data)
+        var ajax_post = document.getElementById('ajax_post')
+
+        ajax_post.addEventListener('click', function(e) {
+          if (load_time != 10){
+            e.preventDefault()
+            console.log("불러오기방지 되었습니다")
+            return
+          }
+          load_time = 10
+          loadAjax('/problem/load/' + number)
+          var load_listen = setInterval(function(){
+            ajax_post.value = load_time
+            if (--load_time < 0) {
+              ajax_post.value = '불러오기'
+              load_time = 10
+              clearInterval(load_listen)
+            }
+          }, 1000);
+        })
+        function sendAjax(url, data, language){
+          var data = JSON.stringify({ 'code' : data })
           var xhr = new XMLHttpRequest()
           xhr.open('POST', url, true)
           xhr.setRequestHeader('Content-type','application/json')
@@ -27,8 +69,27 @@ html
 
           xhr.addEventListener('load',function() {
             var result = JSON.parse(xhr.responseText)
-            document.getElementById('output').value= result.result + "\n" + result.output;
+            document.getElementById('output').value = result.result + "\n" + result.output;
           });
+        }
+        function loadAjax(url){
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type','application/json')
+          xhr.send()
+
+          xhr.addEventListener('load',function() {
+            var result = JSON.parse(xhr.responseText)
+            if (result.message == '성공') {
+              document.getElementById('output').value = "코드 불러왔어요"
+              editor.setValue(result.code)
+            } else {
+              document.getElementById('output').value = "코드 내신 기록이 없어요.."
+            }
+          });
+        }
+        if(mode =='view') {
+          ajax_post.click()
         }
       })
     body
@@ -42,11 +103,14 @@ html
             |  번 문제
           p 언어선택
             select#language(name='language')
-              option(name='1') C
-              option(name='2') C++
-          textarea#code(style='resize:none' name='code')
+              option(name='c') C
+              option(name='cpp') C++
+              option(name='java') java
+              option(name='python') Python
+          #code_content
+            textarea#code(style='resize:none' name='code')
           p
-          textarea#output(name='output' style='resize:none;' readonly='readonly')
-          p
-          input#ajax_post(type='button' value='제출하기' class='ajaxsend')
-          p
+            textarea#output(name='output' style='resize:none;' readonly='readonly')
+          #code_buttons
+            input#ajax_submit(type='button' value='제출하기' class='ajaxsend')
+            input#ajax_post(type='button' value='불러오기' class='ajaxsend')

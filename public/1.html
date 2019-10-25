@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://localhost:3000/problem/submit/1 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+      #ps_page {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #6578b3;
+  display: inline-flex;
+}
+
+#login_banner {
+  width: 100%;
+  height: auto;
+}
+
+#ps_content {
+  width: 100%;
+  height: 100%;
+  margin: 10px;
+  background-color: #f7f7ff;
+}
+
+#ps_main_banner, #ps_content {
+  overflow: auto;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+}
+      * {
+  box-sizing: border-box;
+  position: relative;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+#main_page {
+  width: 100%;
+  height: 100%;
+}
+
+#content {
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: inline-flex;
+}
+
+#algorithm {
+  border: 1px solid black;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+#ps {
+  padding: 10px;
+  border: 1px solid black;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+}
+
+#register{
+  padding: 10px;
+  border: 1px solid black;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+}
+
+    </style>
+    <script src="./1_files/jquery.min.js.다운로드"></script>
+  </head>
+  <body>
+    <div id="main_page">
+      
+        
+          <style>#top {
+  width: 100%;
+  overflow: auto;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+#top_page_list {
+  display: inline-block;
+}
+h1 > a:link,
+h1 > a:visited,
+h1 > a:hover {
+  color: black;
+}
+h1 > a{
+  text-decoration: none;
+  border: 1px solid black;
+  padding: 11px;
+}
+a.menu {
+  vertical-align: bottom;
+  background-color: white;
+  width: 200px;
+  height: 50px;
+  margin: 10px;
+  padding: 10px;
+  text-decoration: none;
+  border: 1px solid black;
+}
+
+a.menu:link,
+a.menu:visited,
+a.menu:hover {
+  color: black;
+}
+
+          </style>
+          <script type="text/javascript">
+            $(document).ready(function(){
+              var algorithm_flag = true
+              $("#algorithm_btn").click(function() {
+                $("#algorithm").animate({
+                  width: "toggle"
+                })
+              })
+              $("#ps_btn").click(function() {
+                $("#ps").animate({
+                  width : "toggle"
+                })
+              })
+            })
+          </script>
+        
+        
+          <div id="top">
+            <div id="top_banner">
+              <h1><a href="http://localhost:3000/">WELCOME TO CORDERS</a></h1>
+            </div>
+            <div id="top_page_list"><a class="menu" id="algorithm_btn">Algorithm</a><a class="menu" id="ps_btn">Problem Solving</a></div>
+          </div>
+        
+      
+      <div id="content">
+        <div id="algorithm">
+          
+            
+              <style>
+                /* 여기부터 algorithm top */
+.algorithm_top_Btn {
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+}
+
+.algorithm_top_Btn:link,
+.algorithm_top_Btn:visited,
+.algorithm_top_Btn:hover {
+  color: black;
+}
+
+.algorithm_top_Btn {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  margin-left: 5px;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  text-decoration: none;
+  font-family: serif;
+}
+
+#algorithm_top {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+#backfront_page {
+  width: 100%;
+}
+
+#algorithm_top_banner {
+  width: 100%;
+}
+
+#algorithm_top_function {
+  width: 100%;
+  align-content: center;
+  display: block;
+}
+
+#algorithm_top_form {
+  display: block;
+}
+
+#algorithm_top_radio {
+  background-color: #ffff01;
+  margin: 10px;
+  margin-bottom: 20px;
+}
+
+#algorithm_top_btns {
+  margin: 10px;
+}
+
+/* 여기부터 content list */
+#algorithm_content_list {
+  margin-top: 30px;
+  border: 1px solid black;
+}
+
+a.algorithmMenu {
+  margin-bottom: 50px;
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+}
+
+a.algorithmMenu:link,
+a.algorithmMenu:visited,
+a.algorithmMenu:hover {
+  color: black;
+}
+
+.algorithmMenu_li {
+  margin: 10px;
+}
+
+/* 여기부터 content */
+#algorithm_content {
+  margin-top: 30px;
+  border: 1px solid black;
+  padding: 20px;
+}
+                #algorithm_page {
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffb7;
+}
+
+#algorithm_content_list{
+  background-color: #ffaaaa;
+}
+#algorithm_content{
+  background-color: #bbaaa2;
+}
+
+              </style>
+              <script src="./1_files/jquery.min.js.다운로드"></script>
+            
+            
+              <div id="algorithm_page">
+                
+                  
+                    <div id="backfront_page"><a class="algorithm_top_Btn" id="back_btn" href="http://localhost:3000/problem/submit/1">◀</a><a class="algorithm_top_Btn" id="front_btn" href="http://localhost:3000/problem/submit/1">▶</a></div>
+                  
+                
+                
+                  
+                    <script>
+                      $(document).ready(function(){
+                        var algorithmName = 
+                        var algorithmName_ko = 
+                        var algorithm_list = 
+                        var algorithm_content = 
+                        var algorithm_content_list = 
+                        
+                        $("#algorithm_create").click(function(e){
+                          e.preventDefault()
+                          var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+                          var data = JSON.stringify({ 
+                            parent : algorithmName,
+                            algorithmName_ko : algorithmName_ko,
+                            algorithm_list : algorithm_list,
+                            algorithm_content_list : algorithm_content_list
+                          })
+                          var url = ''
+                          if (form == 'list') url = '/algorithm/createList'
+                          else if (form == 'content') url = '/algorithm/createContent'
+                          else {
+                            alert('생성은 리스트와 내용만 가능합니다')  
+                            return
+                          }
+                          sendAjax(url, data)
+                        })
+                        
+                        $('#algorithm_delete').click(function(e){
+                          e.preventDefault()
+                          var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+                          var data = JSON.stringify({ 
+                            parent : algorithmName,
+                            algorithmName_ko : algorithmName_ko,
+                            algorithm_list : algorithm_list,
+                            algorithm_content_list : algorithm_content_list
+                          })
+                          var url = ''
+                          if (form == 'list') url = '/algorithm/delete/list'
+                          else if (form == 'content') url = '/algorithm/delete/content'
+                          else if (form == 'table') url = '/algorithm/delete/table'
+                          else return
+                          sendAjax(url, data)
+                        })
+                        
+                        function sendAjax(url, data){
+                          var xhr = new XMLHttpRequest()
+                          xhr.open('POST', url, true)
+                          xhr.setRequestHeader('Content-type', 'application/json')
+                          xhr.send(data)
+                          
+                          xhr.addEventListener('load', function() {
+                            var result = JSON.parse(xhr.responseText)
+                            if (result.result == 'NO') {
+                              alert(result.err)
+                              return
+                            }
+                            else if(result.result == 'YES'){
+                              alert("삭제 완료")
+                              location.href = '/'
+                              return
+                            }
+                            var arr = document.querySelectorAll('#algorithm > script')
+                            for (var i = 0; i < arr.length; i++) arr[i].outerHTML = ''
+                            document.querySelector('#algorithm_page').innerHTML = result
+                            arr = document.getElementsByTagName('script')
+                            for (var i = 0; i < arr.length; i++) {
+                              eval(arr[i].innerHTML) //run script inside div
+                            }
+                          })
+                        }
+                      })
+                    </script>
+                  
+                  
+                    <div id="algorithm_top">
+                      <div id="algorithm_top_banner">
+                        <h1>Hello  !</h1>
+                      </div>
+                      <div id="algorithm_top_function">
+                        <form id="algorithm_top_form" method="post">
+                          <div id="algorithm_top_radio">
+                            <input type="radio" name="choose" value="list" checked="">리스트
+                            <input type="radio" name="choose" value="content">내용
+                          </div>
+                          <div id="algorithm_top_btns">
+                            <input class="algorithm_top_Btn" id="algorithm_create" type="submit" value="생성">
+                            <input class="algorithm_top_Btn" id="algorithm_modify" type="submit" value="수정">
+                            <input class="algorithm_top_Btn" id="algorithm_delete" type="submit" value="삭제">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  
+                
+                
+                  
+                    <script type="text/javascript">
+                      $(document).ready(function(){
+                        var algorithmName_ko = 
+                        var algorithm_list = 
+                        $(".algorithmMenu").click(function(e){
+                          e.preventDefault();
+                          sendAjax(`/algorithm/${e.target.id}`, e.target.id);
+                        })
+                        function sendAjax(url, e){
+                          var data = {
+                            algorithmName: e,
+                            algorithmName_ko : algorithm_list[e].ko,
+                            algorithm_list: algorithm_list[e],
+                          }
+                          data = JSON.stringify(data)
+                          var xhr = new XMLHttpRequest()
+                          xhr.open('POST', url, true)
+                          xhr.setRequestHeader('Content-type', 'application/json')
+                          xhr.send(data)
+                          
+                          xhr.addEventListener('load', function(){
+                            var result = xhr.responseText
+                            result = JSON.parse(result)
+                            var arr = document.querySelectorAll('#content > script')
+                            for (let i = 0; i < arr.length; i++) arr[i].outerHTML = ''
+                            document.querySelector('#algorithm_page').outerHTML = result
+                            arr = document.getElementsByTagName('script')
+                            for (let i = 0; i < arr.length; i++) {
+                              eval(arr[i].innerHTML) //run script inside div
+                            }
+                          })
+                        }
+                      })
+                    </script>
+                  
+                  
+                    <div id="algorithm_content_list">
+                      <p></p>
+                    </div>
+                  
+                
+                
+                  
+                    <script type="text/javascript" src="./1_files/taboverride.js.다운로드"></script>
+                  
+                  
+                    <div id="algorithm_content">
+                      <p></p>
+                    </div>
+                  
+                
+              </div>
+            
+          
+        </div>
+        <div id="ps">
+          <div id="ps_page">
+            
+              
+                <style>/* LEFT CSS */
+#left {
+  width: 25%;
+  margin: 10px;
+  background-color: #ff232f00;
+}
+
+/* 로그인 Form */
+.login_input {
+  padding: 1px;
+}
+
+.login_button {
+  border: 1px solid #6284c7;
+  background-color: #6284c7;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#register_link {
+  vertical-align: bottom;
+  text-decoration: none;
+  background: #4E9CAF;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+#login {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#login_form {
+  display: inline-grid;
+}
+
+#login_form .login_input {
+  margin: 5px;
+}
+
+/* 로그인 후 */
+#login_id {
+  color: white;
+}
+
+#login_success {
+  padding: 10px;
+  overflow: auto;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* ps 메뉴 리스트 */
+#ps_list {
+  margin-top: 30px;
+}
+
+#ps_list #ps_list_menu {
+  background-color: black;
+  color: white;
+}
+
+.ps_list>a {
+  vertical-align: bottom;
+  text-decoration: none;
+  font-family: serif;
+  border-radius: 5px;
+}
+
+.ps_list>a:link,
+.ps_list>a:visited,
+.ps_list>a:hover {
+  color: black;
+}
+
+.ps_list {
+  border-radius: 5px;
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  text-decoration: none;
+  font-family: serif;
+}
+
+                </style>
+                <script src="./1_files/jquery.min.js.다운로드"></script>
+              
+              
+                <div id="left"><a href="http://localhost:3000/"><img src="./1_files/login_banner.png" id="login_banner"></a>
+                  <div id="login_success">
+                    <h2>
+                      <div id="login_id">pyw0564</div>
+                    </h2>
+                    <h3>님 반갑습니다</h3>
+                    <form action="http://localhost:3000/logout" method="post">
+                      <input class="login_button" type="submit" value="로그아웃">
+                    </form>
+                  </div>
+                  <div id="ps_list">
+                    <div class="ps_list" id="ps_list_menu">메뉴</div>
+                    <li class="ps_list"><a href="http://localhost:3000/problem">문제 풀기</a></li>
+                    <li class="ps_list"><a href="http://localhost:3000/problem/rank">점수 확인</a></li>
+                    <li class="ps_list"><a href="http://localhost:3000/problem/notice">공지사항</a></li>
+                  </div>
+                </div>
+              
+            
+            
+              
+                <style>
+                  #ps_content_table {
+  background-color: black;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 테이블 th */
+#ps_content_table th {
+  padding-left: 20px;
+  padding-right: 20px;
+  color: white;
+}
+/* 테이블 th */
+#ps_content_table td{
+  font-size: 20px;
+  font-weight: bold;
+}
+/* 다운로드 */
+.ps_download:link,
+.ps_download:hover {
+  color: #0072ff;
+}
+
+.ps_download:visited {
+  color : #ff0000;
+}
+
+.ps_download {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  text-decoration: none;
+}
+
+.ps_submit:link,
+.ps_submit:visited,
+.ps_submit:hover {
+  color: #ff5959;
+}
+
+.ps_submit {
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  height: auto;
+  text-decoration: none;
+}
+
+td {
+  border: 1px solid black;
+  padding: 10px;
+  height: 30px;
+  background-color: #ffffff
+}
+                  /* #code {
+  font-family: inherit;
+  color: white;
+  padding: 10px;
+  background-color: #3e3e3e;
+  width: 600px;
+  height: 400px;
+} */
+
+#output {
+  font-family: inherit;
+  padding: 10px;
+  width: 400px;
+  height: 150px;
+}
+                  /* BASICS */
+
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 300px;
+  color: black;
+  direction: ltr;
+}
+
+/* PADDING */
+
+.CodeMirror-lines {
+  padding: 4px 0; /* Vertical padding around content */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 4px; /* Horizontal padding of content */
+}
+
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* GUTTER */
+
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+  white-space: nowrap;
+}
+.CodeMirror-linenumbers {}
+.CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.CodeMirror-guttermarker { color: black; }
+.CodeMirror-guttermarker-subtle { color: #999; }
+
+/* CURSOR */
+
+.CodeMirror-cursor {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  width: auto;
+  border: 0 !important;
+  background: #7e7;
+}
+.cm-fat-cursor div.CodeMirror-cursors {
+  z-index: 1;
+}
+.cm-fat-cursor-mark {
+  background-color: rgba(20, 255, 20, 0.5);
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+}
+.cm-animate-fat-cursor {
+  width: auto;
+  border: 0;
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+  background-color: #7e7;
+}
+@-moz-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@-webkit-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+
+/* Can style cursor different in overwrite (non-insert) mode */
+.CodeMirror-overwrite .CodeMirror-cursor {}
+
+.cm-tab { display: inline-block; text-decoration: inherit; }
+
+.CodeMirror-rulers {
+  position: absolute;
+  left: 0; right: 0; top: -50px; bottom: 0;
+  overflow: hidden;
+}
+.CodeMirror-ruler {
+  border-left: 1px solid #ccc;
+  top: 0; bottom: 0;
+  position: absolute;
+}
+
+/* DEFAULT THEME */
+
+.cm-s-default .cm-header {color: blue;}
+.cm-s-default .cm-quote {color: #090;}
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-header, .cm-strong {font-weight: bold;}
+.cm-em {font-style: italic;}
+.cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
+
+.cm-s-default .cm-keyword {color: #708;}
+.cm-s-default .cm-atom {color: #219;}
+.cm-s-default .cm-number {color: #164;}
+.cm-s-default .cm-def {color: #00f;}
+.cm-s-default .cm-variable,
+.cm-s-default .cm-punctuation,
+.cm-s-default .cm-property,
+.cm-s-default .cm-operator {}
+.cm-s-default .cm-variable-2 {color: #05a;}
+.cm-s-default .cm-variable-3, .cm-s-default .cm-type {color: #085;}
+.cm-s-default .cm-comment {color: #a50;}
+.cm-s-default .cm-string {color: #a11;}
+.cm-s-default .cm-string-2 {color: #f50;}
+.cm-s-default .cm-meta {color: #555;}
+.cm-s-default .cm-qualifier {color: #555;}
+.cm-s-default .cm-builtin {color: #30a;}
+.cm-s-default .cm-bracket {color: #997;}
+.cm-s-default .cm-tag {color: #170;}
+.cm-s-default .cm-attribute {color: #00c;}
+.cm-s-default .cm-hr {color: #999;}
+.cm-s-default .cm-link {color: #00c;}
+
+.cm-s-default .cm-error {color: #f00;}
+.cm-invalidchar {color: #f00;}
+
+.CodeMirror-composing { border-bottom: 2px solid; }
+
+/* Default styles for common addons */
+
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
+.CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
+.CodeMirror-activeline-background {background: #e8f2ff;}
+
+/* STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+.CodeMirror {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 30px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -30px; margin-right: -30px;
+  padding-bottom: 30px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 30px solid transparent;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+.CodeMirror-vscrollbar {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0; bottom: 0;
+}
+.CodeMirror-gutter-filler {
+  left: 0; bottom: 0;
+}
+
+.CodeMirror-gutters {
+  position: absolute; left: 0; top: 0;
+  min-height: 100%;
+  z-index: 3;
+}
+.CodeMirror-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: -30px;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.CodeMirror-gutter-background {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper ::selection { background-color: transparent }
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-variant-ligatures: contextual;
+  font-variant-ligatures: contextual;
+}
+.CodeMirror-wrap pre.CodeMirror-line,
+.CodeMirror-wrap pre.CodeMirror-line-like {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  padding: 0.1px; /* Force widget margins to stay inside of the container */
+}
+
+.CodeMirror-widget {}
+
+.CodeMirror-rtl pre { direction: rtl; }
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.CodeMirror-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+.CodeMirror-measure pre { position: static; }
+
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+
+.cm-searching {
+  background-color: #ffa;
+  background-color: rgba(255, 255, 0, .4);
+}
+
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
+
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
+
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
+
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
+
+                </style>
+                <script src="./1_files/jquery.min.js.다운로드"></script>
+                <script type="text/javascript" src="./1_files/taboverride.js.다운로드"></script>
+                <script type="text/javascript" src="./1_files/codemirror.js.다운로드"></script>
+                <script>
+                  $(document).ready(function(){
+                    var name = "A + B"
+                    var number = "1"
+                    var textarea = document.getElementById('code')
+                    tabOverride.set(textarea)
+                    var editor = CodeMirror.fromTextArea(textarea, {
+                      lineNumbers: true,
+                      value: "function myScript(){return 100;}\n",
+                      mode:  "javascript"
+                    });
+                    document.querySelector('.ajaxsend').addEventListener('click',function(){
+                      document.getElementById('output').value = ""
+                      sendAjax('/problem/score/' + number, code.value)
+                    })
+                    function sendAjax(url,data,language){
+                      console.log(url, data)
+                      var data = { 'code' : data }
+                      data = JSON.stringify(data)
+                      var xhr = new XMLHttpRequest()
+                      xhr.open('POST', url, true)
+                      xhr.setRequestHeader('Content-type','application/json')
+                      xhr.send(data)
+                  
+                      xhr.addEventListener('load',function() {
+                        var result = JSON.parse(xhr.responseText)
+                        document.getElementById('output').value= result.result + "\n" + result.output;
+                      });
+                    }
+                  })
+                </script>
+                
+                  <div id="ps_content">
+                    <div id="submit_content">
+                      <h1>A + B 제출하기
+                      </h1>
+                      <h3>1 번 문제
+                      </h3>
+                      <p>언어선택
+                        <select id="language" name="language">
+                          <option name="c">C</option>
+                          <option name="cpp">C++</option>
+                        </select>
+                      </p>
+                      <textarea id="code" style="resize: none; display: none;" name="code" data-taboverride-enabled="true"></textarea><div class="CodeMirror cm-s-default CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 778.344px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 30px; margin-bottom: -17px; border-right-width: 13px; min-height: 23px; min-width: 751.344px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre class="CodeMirror-line-like"><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors" style=""><div class="CodeMirror-cursor" style="left: 748.344px; top: 0px; height: 15px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -30px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">var a = 0;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 13px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="height: 36px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div>
+                      <p></p>
+                      <textarea id="output" name="output" style="resize:none;" readonly="readonly"></textarea>
+                      <p></p>
+                      <input class="ajaxsend" id="ajax_post" type="button" value="제출하기">
+                      <p></p>
+                    </div>
+                  </div>
+                
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+</body></html>

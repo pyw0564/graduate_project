@@ -6,14 +6,14 @@ html
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
   body
     #left
-      a(href='/problem')
+      a(href='/')
         img(src='/public/login_banner.png')#login_banner
-      -if(!login_session) {
+      -if(!id) {
         #login
           form#login_form(action='/login' method='post')
             input.login_input(type='text' name='id' placeholder='아이디')
             input.login_input(type='password' name='pw' placeholder='비밀번호')
-            input.login_input.login_button(type='submit' value='로그인')
+            input.login_input.login_button#login_button(type='submit' value='로그인')
             a#register_link(href='/register') 회원가입
       -} else {
          #login_success
@@ -25,9 +25,9 @@ html
       -}
       #ps_list
         #ps_list_menu.ps_list 메뉴
-        li.ps_list
-            a(href="/problem") 문제 풀기
-        li.ps_list
+        .ps_list
+          a(href="/problem") 문제 풀기
+        .ps_list
           a(href="/problem/rank") 점수 확인
-        li.ps_list
+        .ps_list
           a(href="/problem/notice") 공지사항

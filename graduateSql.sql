@@ -6,17 +6,29 @@ CREATE TABLE Users(
 	id nvarchar(25) NOT NULL,
 	pw nvarchar(25) NOT NULL,
 	name nvarchar(25) NOT NULL,
-	phone nvarchar(25) NOT NULL
+	phone nvarchar(25) NOT NULL,
 	PRIMARY KEY(id)
 )
-
+CREATE TABLE Rank(
+	id nvarchar(25) NOT NULL,
+	p1 int,
+	p2 int,
+	p3 int,
+	PRIMARY KEY(id)
+)
 /* SELECT TABLES */
+
 SELECT * FROM Users
+SELECT * FROM Rank
 SELECT * FROM Users WHERE id='ab' AND pw = 'a'
+
 /* DROP TABLES */
 /*
 DROP TABLE Users
+DROP TABLE Rank
 */
+
+
 drop table algorithms
 
 CREATE TABLE algorithms(

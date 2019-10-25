@@ -47,20 +47,13 @@ app.locals.pretty = true;
 
 app.get('/', async function(req, res) {
   console.log('세션유지 ->', req.session._id)
-  let login_session = false
-  let id = null
-  if(req.session._id) {
-    login_session = true
-    id = req.session._id
-  }
   await readDB()
   const algorithmName = 'algorithms'
   const algorithmName_ko = '알고리즘'
   const algorithm_content = algorithm_list.content
   const algorithm_content_list = makeAlgorithmList(algorithm_list)
   res.render("main", {
-    login_session : login_session,
-    id : id,
+    id : req.session._id,
     algorithmName: undefinedCheck(algorithmName),
     algorithmName_ko: undefinedCheck(algorithmName_ko),
     algorithm_list: undefinedCheck(algorithm_list),

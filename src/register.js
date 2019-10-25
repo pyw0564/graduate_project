@@ -57,6 +57,7 @@ router.post('/register', async function(req, res) {
 
   let ret = await sqlQuery(`INSERT INTO Users VALUES('${id}', '${pw}', '${name}', '${phone}')`)
   if (ret.rowsAffected) {
+    await sqlQuery(`INSERT INTO Rank(id) VALUES('${id}')`)
     return res.send(redirect_main('회원가입 완료'))
   } else {
     return res.send(redirect_main('중복된 아이디가 존재합니다'))

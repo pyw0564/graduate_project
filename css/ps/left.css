@@ -1,15 +1,12 @@
 /* LEFT CSS */
 #left {
+  overflow: hidden;
   width: 25%;
   margin: 10px;
   background-color: #ff232f00;
 }
 
 /* 로그인 Form */
-.login_input {
-  padding: 1px;
-}
-
 .login_button {
   border: 1px solid #6284c7;
   background-color: #6284c7;
@@ -18,15 +15,20 @@
   cursor: pointer;
 }
 
+#login_button {
+  font-size: 15px;
+  height: 30px;
+}
+
 #register_link {
   vertical-align: bottom;
   text-decoration: none;
   background: #4E9CAF;
-  padding: 10px;
+  padding: 5px;
+  margin: 5px;
   text-align: center;
   border-radius: 5px;
   color: white;
-  font-weight: bold;
 }
 
 #login {
@@ -50,7 +52,7 @@
 
 #login_success {
   padding: 10px;
-  overflow: auto;
+  overflow: hidden;
   border-radius: 5px;
   text-align: center;
 }

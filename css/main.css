@@ -13,7 +13,6 @@ html, body {
 body {
   display: flex;
   justify-content: center;
-  background-color: white;
 }
 
 #main_page {
@@ -45,7 +44,7 @@ body {
   height: 100%;
 }
 
-#register{
+#register {
   padding: 10px;
   border: 1px solid black;
   white-space: nowrap;

@@ -2,11 +2,22 @@ doctype html
 html
   head
     style
+      include ./../../../../css/ps/rank/rank.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
   body
     #ps_content
-      h1 랭크 페이지 입니다.
-      ul 
-        li 1위
-        li 2위
-        li 3위
+      h1= id
+        | 
+        | Rank Page!
+      -for(let i in table) {
+        .rank_row
+          a(href='/problem/download/' + table[i].problem).rank_number= table[i].problem
+            |번
+          -if(table[i].judge == '맞았습니다!')
+            .correct= table[i].judge
+          -else if(table[i].judge == '틀렸습니다')
+            .wrong= table[i].judge
+          -else
+            .unknown= table[i].judge
+          a#code_view(href='/problem/mycode/' + table[i].problem).rank_number 코드보기
+      -}
