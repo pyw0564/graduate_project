@@ -1,0 +1,48 @@
+.score_row {
+  display: flex;
+  justify-content: center;
+  margin:20px;
+}
+
+.correct {
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: green;
+}
+
+.wrong {
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+}
+
+.unknown {
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: blue;
+}
+
+.score_number:link,
+.score_number:hover {
+  color: #0072ff;
+}
+.score_number:visited {
+  color: #0072ff;
+}
+.score_number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 20px;
+}
+#code_view {
+  margin-left: 20px;
+}

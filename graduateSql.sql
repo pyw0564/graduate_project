@@ -9,19 +9,32 @@ CREATE TABLE Users(
 	phone nvarchar(25) NOT NULL,
 	PRIMARY KEY(id)
 )
-CREATE TABLE Rank(
+CREATE TABLE Score(
 	id nvarchar(25) NOT NULL,
-	p1 int,
-	p2 int,
-	p3 int,
-	PRIMARY KEY(id)
+	problem int,
+	code nvarchar(MAX),
+	judge nvarchar(25),
+	PRIMARY KEY(id, problem)
 )
 /* SELECT TABLES */
 
-SELECT * FROM Users
-SELECT * FROM Rank
-SELECT * FROM Users WHERE id='ab' AND pw = 'a'
+IF NOT EXISTS(SELECT * FROM Rank WHERE id='pyw0564' AND problem=1)
+  BEGIN
+    INSERT INTO Rank(id,problem,code,judge)
+    VALUES('pyw0564',1,'#include <stdio.h>
 
+int main(){
+  int a,b;
+  scanf("%d %d", &a, &b);
+  printf("%d", a + b);
+
+}',null)
+  END
+
+SELECT * FROM Users
+SELECT * FROM Score
+SELECT * FROM Users WHERE id='ab' AND pw = 'a'
+INSERT INTO Score(id) VALUES('pyw0564')
 /* DROP TABLES */
 /*
 DROP TABLE Users

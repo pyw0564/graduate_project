@@ -5,21 +5,57 @@ html
       include ./../../css/top.css
     script(type='text/javascript').
       $(document).ready(function(){
-        var algorithm_flag = true
+        var ps_flag = true
+        var algorithm_flag = false
         $("#algorithm_btn").click(function() {
-          $("#algorithm").animate({
-            width: "toggle"
-          })
+          algorithm_flag = !algorithm_flag
+          $("#algorithm").toggle("slide")
+          //dynamic_width(algorithm_flag, ps_flag)
         })
         $("#ps_btn").click(function() {
-          $("#ps").animate({
-            width : "toggle"
-          })
+          ps_flag = !ps_flag
+          $("#ps").toggle("slide")
+          //dynamic_width(algorithm_flag, ps_flag)
         })
       })
+      function dynamic_width(algorithm_flag, ps_flag) {
+        console.log(algorithm_flag, ps_flag)
+        if (algorithm_flag && ps_flag) {
+          console.log('1')
+          $("#algorithm").animate({
+            'width' : '950px'
+          }, 100)
+          $("#algorithm").delay(100).fadeIn()
+          $("#ps").animate({
+            'width' : '950px'
+          }, 100)
+          $("#ps").delay(100).fadeIn()
+        }
+        else if (algorithm_flag) {
+          console.log('2')
+          $("#algorithm").animate({
+            'width' : '1900px',
+          }, 100)
+          $("#algorithm").delay(100).fadeIn()
+          $("#ps").delay(100).fadeOut()
+        }
+        else if (ps_flag) {
+          console.log('3')
+          $("#algorithm").delay(100).fadeOut()
+          $("#ps").delay(100).fadeIn()
+          $("#ps").animate({
+            'width' : '1900px'
+          })
+        }
+        else {
+          console.log('4')
+          $("#ps").delay(100).fadeOut()
+          $("#algorithm").delay(100).fadeOut()
+        }
+      }
   body
     #top
       include top_banner.pug
       #top_page_list
-        a#algorithm_btn.menu Algorithm
         a#ps_btn.menu Problem Solving
+        a#algorithm_btn.menu Algorithm

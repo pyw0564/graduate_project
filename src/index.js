@@ -62,11 +62,6 @@ app.get('/', async function(req, res) {
   })
 })
 
-app.get('/ps', function(req, res) {
-  res.render('ps')
-})
-
-
 function undefinedCheck(o) {
   return o == undefined ? null : o
 }

@@ -78,10 +78,12 @@ function redirect_main(message) {
   </script>`
 }
 
+// url로 redirect하기
 function redirect_url(message, url) {
   return `<script>
     alert('${message}')
     location.href='${url}'
   </script>`
 }
+
 module.exports = router

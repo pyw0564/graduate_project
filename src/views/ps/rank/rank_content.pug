@@ -5,19 +5,24 @@ html
       include ./../../../../css/ps/rank/rank.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
   body
-    #ps_content
-      h1= id
-        | 
-        | Rank Page!
-      -for(let i in table) {
-        .rank_row
-          a(href='/problem/download/' + table[i].problem).rank_number= table[i].problem
-            |번
-          -if(table[i].judge == '맞았습니다!')
-            .correct= table[i].judge
-          -else if(table[i].judge == '틀렸습니다')
-            .wrong= table[i].judge
-          -else
-            .unknown= table[i].judge
-          a#code_view(href='/problem/mycode/' + table[i].problem).rank_number 코드보기
-      -}
+    #rank_content
+      h1 Rank Page!
+      table#rank_content_table
+        tr.rank_row
+          th 순위
+          th 아이디
+          th 맞은 개수
+        -for (let i in table) {
+        - var j = (parseInt(i) + 1)
+          tr.rank_row
+            -if(id == table[i].id) {
+              td.rank_record_rank= j
+              td.rank_record_id= table[i].id
+              td.rank_record_count= table[i].count
+            - } else {
+              td= j
+              td= table[i].id
+              td= table[i].count
+            -}
+
+        -}

@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    style
+      include ./../../../../css/ps/score/score.css
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+  body
+    #score_content
+      h1= id
+        | 
+        | Solve Page!
+      -for(let i in table) {
+        .score_row
+          a(href='/problem/download/' + table[i].problem).score_number= table[i].problem
+            |번
+          -if(table[i].judge == '맞았습니다!')
+            .correct= table[i].judge
+          -else if(table[i].judge == '틀렸습니다')
+            .wrong= table[i].judge
+          -else
+            .unknown= table[i].judge
+          a#code_view(href='/problem/mycode/' + table[i].problem).score_number 코드보기
+      -}

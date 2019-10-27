@@ -4,6 +4,23 @@ html
     style
       include ./../../../css/ps/left.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.compatibility.js")
+    //- script.
+    //-   $(document).ready(function(){
+    //-     function j_test_mover(o){
+    //-       $(o).stop().animate({'border-radius':120}, 1000, 'easeOutElastic');
+    //-     }
+    //- 
+    //-     function j_test_mout(o){
+    //-       $(o).stop().animate({'border-radius':1});
+    //-     }
+    //- 
+    //-     $('#login_banner').bind('mouseover', function(){
+    //-         j_test_mover(this);
+    //-     }).bind('mouseout', function(){
+    //-         j_test_mout(this);
+    //-     });
+    //-   })
   body
     #left
       a(href='/')
@@ -28,6 +45,6 @@ html
         .ps_list
           a(href="/problem") 문제 풀기
         .ps_list
-          a(href="/problem/rank") 점수 확인
+          a(href="/problem/score") 점수 확인
         .ps_list
-          a(href="/problem/notice") 공지사항
+          a(href="/problem/rank") 랭킹 보기

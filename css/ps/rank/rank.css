@@ -1,48 +1,51 @@
-.rank_row {
-  display: flex;
-  justify-content: center;
-  margin:20px;
-}
-
-.correct {
-  align-items: center;
-  font-weight: bold;
-  font-size: 20px;
-  color: green;
-}
-
-.wrong {
-  align-items: center;
-  font-weight: bold;
-  font-size: 20px;
-  color: red;
-}
-
-.unknown {
+.rank_record_rank {
   align-items: center;
   font-weight: bold;
   font-size: 20px;
   color: blue;
-}
-
-.rank_number:link,
-.rank_number:hover {
-  color: #0072ff;
-}
-.rank_number:visited {
-  color: #0072ff;
-}
-.rank_number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 20px;
+  margin-left: 20px;
   margin-right: 20px;
 }
-#code_view {
+
+.rank_record_id {
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: green;
+
   margin-left: 20px;
+  margin-right: 20px;
+}
+
+.rank_record_count {
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#rank_content_table {
+  background-color: #6578b3;
+  text-align: center;
+  margin-left: auto;
+  border-radius: 5px;
+  margin-right: auto;
+}
+/* 테이블 th */
+#rank_content_table th {
+  padding-left: 20px;
+  padding-right: 20px;
+  color: white;
+}
+/* 테이블 th */
+#rank_content_table td{
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #6578b3;
+  padding: 10px;
+  height: 30px;
+  background-color: #ffffff
 }
