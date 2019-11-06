@@ -1,6 +1,5 @@
-#include <stdio.h>
+#include <iostream>
 
 int main(){
-  puts("WELCOME TO CODERS");
-  return 0;
+  while(1);
 }

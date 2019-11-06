@@ -29,6 +29,7 @@ body {
 }
 
 #algorithm {
+  padding: 10px;
   border: 1px solid black;
   white-space: nowrap;
   width: 100%;

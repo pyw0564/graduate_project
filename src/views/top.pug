@@ -4,55 +4,101 @@ html
     style
       include ./../../css/top.css
     script(type='text/javascript').
-      $(document).ready(function(){
+      $(document).ready(function() {
         var ps_flag = true
-        var algorithm_flag = false
+        var algorithm_flag = !{JSON.stringify(algorithm_flag)}
+        console.log(ps_flag, algorithm_flag)
+        color_change("#ps_btn", ps_flag)
+        color_change("#algorithm_btn", algorithm_flag)
+        dynamic_width(algorithm_flag, ps_flag)
         $("#algorithm_btn").click(function() {
           algorithm_flag = !algorithm_flag
-          $("#algorithm").toggle("slide")
-          //dynamic_width(algorithm_flag, ps_flag)
+          color_change("#algorithm_btn", algorithm_flag)
+          dynamic_width(algorithm_flag, ps_flag)
+          send_ajax(algorithm_flag, ps_flag)
         })
         $("#ps_btn").click(function() {
           ps_flag = !ps_flag
-          $("#ps").toggle("slide")
-          //dynamic_width(algorithm_flag, ps_flag)
+          color_change("#ps_btn", ps_flag)
+          dynamic_width(algorithm_flag, ps_flag)
+          send_ajax(algorithm_flag, ps_flag)
         })
-      })
-      function dynamic_width(algorithm_flag, ps_flag) {
-        console.log(algorithm_flag, ps_flag)
-        if (algorithm_flag && ps_flag) {
-          console.log('1')
-          $("#algorithm").animate({
-            'width' : '950px'
-          }, 100)
-          $("#algorithm").delay(100).fadeIn()
-          $("#ps").animate({
-            'width' : '950px'
-          }, 100)
-          $("#ps").delay(100).fadeIn()
+        function send_ajax(algorithm_flag, ps_flag) {
+          var url = '/algorithm/flag'
+          var data = JSON.stringify({
+            ps_flag : ps_flag,
+            algorithm_flag : algorithm_flag
+          })
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type', 'application/json')
+          xhr.send(data)
+          
         }
-        else if (algorithm_flag) {
-          console.log('2')
-          $("#algorithm").animate({
-            'width' : '1900px',
-          }, 100)
-          $("#algorithm").delay(100).fadeIn()
-          $("#ps").delay(100).fadeOut()
+        function color_change(name, flag) {
+          if (flag)
+            $(name).css('background-color', '#ffe591')
+          else
+            $(name).css('background-color', 'white')
         }
-        else if (ps_flag) {
-          console.log('3')
-          $("#algorithm").delay(100).fadeOut()
-          $("#ps").delay(100).fadeIn()
-          $("#ps").animate({
-            'width' : '1900px'
+        function dynamic_width(algorithm_flag, ps_flag) {
+          if (algorithm_flag && ps_flag) {
+            $("#algorithm").css(
+              'width', '50%'
+            ).css(
+              'display', 'block'
+            )
+            $("#ps").css(
+              'width', '50%'
+            ).css(
+              'display', 'block'
+            )
+            algorithm_ajax()
+          }
+          else if (algorithm_flag) {
+            $("#algorithm").css(
+              'width', '100%'
+            ).css(
+              'display', 'block'
+            )
+            $("#ps").css(
+              'display', 'none'
+            )
+            algorithm_ajax()
+          }
+          else if (ps_flag) {
+            $("#algorithm").css(
+              'display', 'none'
+            )
+            $("#ps").css(
+              'width', '100%'
+            ).css(
+              'display', 'block'
+            )
+          }
+          else {
+            $("#algorithm").css(
+              'display', 'none'
+            )
+            $("#ps").css(
+              'display', 'none'
+            )
+          }
+        }
+        function algorithm_ajax(){
+          var url = '/algorithm/path'
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type','application/json')
+          xhr.send()
+          
+          xhr.addEventListener('load', function() {
+            var result = JSON.parse(xhr.responseText)
+            var algorithm_page = document.querySelector('#algorithm')
+            algorithm_page.innerHTML = result.render
           })
         }
-        else {
-          console.log('4')
-          $("#ps").delay(100).fadeOut()
-          $("#algorithm").delay(100).fadeOut()
-        }
-      }
+      })
   body
     #top
       include top_banner.pug

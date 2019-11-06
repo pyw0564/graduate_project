@@ -3,79 +3,101 @@ html
   head
     script.
       $(document).ready(function(){
-        var algorithmName = !{JSON.stringify(algorithmName)}
-        var algorithmName_ko = !{JSON.stringify(algorithmName_ko)}
-        var algorithm_list = !{JSON.stringify(algorithm_list)}
-        var algorithm_content = !{JSON.stringify(algorithm_content)}
-        var algorithm_content_list = !{JSON.stringify(algorithm_content_list)}
-        
-        $("#algorithm_create").click(function(e){
+        $(document).on('click', '.algorithm_top_Btn', function(e){
           e.preventDefault()
-          var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
-          var data = JSON.stringify({ 
-            parent : algorithmName,
-            algorithmName_ko : algorithmName_ko,
-            algorithm_list : algorithm_list,
-            algorithm_content_list : algorithm_content_list
-          })
-          var url = ''
-          if (form == 'list') url = '/algorithm/createList'
-          else if (form == 'content') url = '/algorithm/createContent'
-          else {
-            alert('생성은 리스트와 내용만 가능합니다')  
-            return
-          }
-          sendAjax(url, data)
+          sendAjax('/algorithm/path', e.target.id);
         })
-        
-        $('#algorithm_delete').click(function(e){
-          e.preventDefault()
-          var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
-          var data = JSON.stringify({ 
-            parent : algorithmName,
-            algorithmName_ko : algorithmName_ko,
-            algorithm_list : algorithm_list,
-            algorithm_content_list : algorithm_content_list
+        function sendAjax(url, direction){
+          console.log("전송중")
+          data = JSON.stringify({
+            direction : direction
           })
-          var url = ''
-          if (form == 'list') url = '/algorithm/delete/list'
-          else if (form == 'content') url = '/algorithm/delete/content'
-          else if (form == 'table') url = '/algorithm/delete/table'
-          else return
-          sendAjax(url, data)
-        })
-        
-        function sendAjax(url, data){
           var xhr = new XMLHttpRequest()
           xhr.open('POST', url, true)
           xhr.setRequestHeader('Content-type', 'application/json')
           xhr.send(data)
-          
-          xhr.addEventListener('load', function() {
+      
+          xhr.addEventListener('load', function(){
             var result = JSON.parse(xhr.responseText)
-            if (result.result == 'NO') {
-              alert(result.err)
-              return
-            }
-            else if(result.result == 'YES'){
-              alert("삭제 완료")
-              location.href = '/'
-              return
-            }
-            var arr = document.querySelectorAll('#algorithm > script')
-            for (var i = 0; i < arr.length; i++) arr[i].outerHTML = ''
-            document.querySelector('#algorithm_page').innerHTML = result
-            arr = document.getElementsByTagName('script')
-            for (var i = 0; i < arr.length; i++) {
-              eval(arr[i].innerHTML) //run script inside div
-            }
+            var algorithm_page = document.querySelector('#algorithm')
+            algorithm_page.innerHTML = result.render
           })
         }
       })
+      //- $(document).ready(function(){
+      //- 
+      //-   $("#algorithm_create").click(function(e){
+      //-     e.preventDefault()
+      //-     var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+      //-     var data = JSON.stringify({ 
+      //-       parent : algorithmName,
+      //-       algorithmName_ko : algorithmName_ko,
+      //-       algorithm_list : algorithm_list,
+      //-       algorithm_content_list : algorithm_content_list
+      //-     })
+      //-     var url = ''
+      //-     if (form == 'list') url = '/algorithm/createList'
+      //-     else if (form == 'content') url = '/algorithm/createContent'
+      //-     else {
+      //-       alert('생성은 리스트와 내용만 가능합니다')  
+      //-       return
+      //-     }
+      //-     sendAjax(url, data)
+      //-   })
+      //- 
+      //-   $('#algorithm_delete').click(function(e){
+      //-     e.preventDefault()
+      //-     var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+      //-     var data = JSON.stringify({ 
+      //-       parent : algorithmName,
+      //-       algorithmName_ko : algorithmName_ko,
+      //-       algorithm_list : algorithm_list,
+      //-       algorithm_content_list : algorithm_content_list
+      //-     })
+      //-     var url = ''
+      //-     if (form == 'list') url = '/algorithm/delete/list'
+      //-     else if (form == 'content') url = '/algorithm/delete/content'
+      //-     else if (form == 'table') url = '/algorithm/delete/table'
+      //-     else return
+      //-     sendAjax(url, data)
+      //-   })
+      //- 
+      //-   function sendAjax(url, data){
+      //-     var xhr = new XMLHttpRequest()
+      //-     xhr.open('POST', url, true)
+      //-     xhr.setRequestHeader('Content-type', 'application/json')
+      //-     xhr.send(data)
+      //- 
+      //-     xhr.addEventListener('load', function() {
+      //-       var result = JSON.parse(xhr.responseText)
+      //-       if (result.result == 'NO') {
+      //-         alert(result.err)
+      //-         return
+      //-       }
+      //-       else if(result.result == 'YES'){
+      //-         alert("삭제 완료")
+      //-         location.href = '/'
+      //-         return
+      //-       }
+      //-       var arr = document.querySelectorAll('#algorithm > script')
+      //-       for (var i = 0; i < arr.length; i++) arr[i].outerHTML = ''
+      //-       document.querySelector('#algorithm_page').innerHTML = result
+      //-       arr = document.getElementsByTagName('script')
+      //-       for (var i = 0; i < arr.length; i++) {
+      //-         eval(arr[i].innerHTML) //run script inside div
+      //-       }
+      //-     })
+      //-   }
+      //- })
   body
     #algorithm_top
-      #algorithm_top_banner
-        h1 Hello #{algorithmName_ko} !
+      #algorithm_top_left
+        #backfront_page
+          a.algorithm_top_Btn#back_btn(href="") ◀
+          a.algorithm_top_Btn#front_btn(href="") ▶
+        #algorithm_top_banner
+          h1#algorithm_title
+            =title
       #algorithm_top_function
         form#algorithm_top_form(method='post')
           #algorithm_top_radio

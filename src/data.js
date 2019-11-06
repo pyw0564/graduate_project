@@ -32,76 +32,7 @@ async function readDB() {
   await verification(path, [{
     tableName: 'algorithms'
   }]);
-  await recursiveMakeDir(path + '/' + 'algorithms', 'algorithms', algorithm_list)
   //console.log(algorithm_list)
-}
-
-async function recursiveMakeDir(path, dirName, object) {
-  await mkdir(path)
-  try {
-    let result = await sqlQuery(`SELECT * FROM ${dirName}`)
-    if (result.recordset.length == 0) {
-      let dirs = fs.readdirSync(path)
-      for (let i = 0; i < dirs.length; i++) {
-        await deleteFolderRecursive(path + '/' + dirs[i])
-      }
-      return;
-    }
-    for (let i = 0; i < result.recordset.length; i++) {
-      await verification(path, result.recordset);
-      let record = result.recordset[i]
-      if (record._type == 'sub') {
-        let nextPath = path + '/' + record.tableName
-        object[record.tableName] = {}
-        object[record.tableName].ko = record.name
-        await recursiveMakeDir(nextPath, record.tableName, object[record.tableName])
-      } else {
-        object.content = record.content
-        // base case..
-      }
-    }
-    return
-  } catch (err) {
-    // console.log('recursiveMakeDir 에러 ~', dirName)
-    return
-  }
-}
-
-async function mkdir(path) {
-  if (!fs.existsSync(path)) {
-    // await console.log('폴더 생성', path)
-    await fs.mkdirSync(path)
-  }
-}
-
-async function verification(path, recordset) {
-  let dirs = fs.readdirSync(path)
-  for (let i = 0; i < dirs.length; i++) {
-    let dir = dirs[i]
-    let flag = false
-    for (let j = 0; j < recordset.length; j++) {
-      let record = recordset[j].tableName
-      if (dir == record) flag = true
-    }
-    if (flag == false) {
-      console.log("파일 삭제", path + '/' + dir)
-      await deleteFolderRecursive(path + '/' + dir)
-    }
-  }
-}
-
-async function deleteFolderRecursive(path) {
-  if (fs.existsSync(path)) {
-    fs.readdirSync(path).forEach(async function(file) {
-      var curPath = path + "/" + file;
-      if (fs.lstatSync(curPath).isDirectory()) { // recurse
-        await deleteFolderRecursive(curPath);
-      } else { // delete file
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(path);
-  }
 }
 
 async function sqlQuery(query) {

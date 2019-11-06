@@ -15,11 +15,8 @@ const client = Redis.createClient() // 레디스
 var redisStore = require('connect-redis')(session) // 레디스
 
 /* config */
-const makeAlgorithmList = config.makeAlgorithmList
 const sqlConfig = config.sqlConfig
 const readDB = config.readDB
-const algorithm_list = config.algorithm_list
-const recursiveMakeAlgorithmList = config.recursiveMakeAlgorithmList
 const sqlQuery = config.sqlQuery
 
 app.use(session({ // 세션 init
@@ -39,32 +36,26 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../'));
-app.use('/', require('./register'))
 app.use('/problem', require('./problem'))
-app.use('/', require('./algorithm'))
+app.use('/algorithm', require('./algorithm'))
+app.use('/', require('./register'))
 app.locals.pretty = true;
 
 
 app.get('/', async function(req, res) {
+  req.session.algorithm_url = null
   console.log('세션유지 ->', req.session._id)
-  await readDB()
-  const algorithmName = 'algorithms'
-  const algorithmName_ko = '알고리즘'
-  const algorithm_content = algorithm_list.content
-  const algorithm_content_list = makeAlgorithmList(algorithm_list)
+  if (!req.session.algorithm_url) {
+    console.log('초기화')
+    req.session.algorithm_flag = false
+    req.session.algorithm_url = ['algorithms']
+    req.session.url_index = 0
+  }
   res.render("main", {
-    id : req.session._id,
-    algorithmName: undefinedCheck(algorithmName),
-    algorithmName_ko: undefinedCheck(algorithmName_ko),
-    algorithm_list: undefinedCheck(algorithm_list),
-    algorithm_content: undefinedCheck(algorithm_content),
-    algorithm_content_list: undefinedCheck(algorithm_content_list)
+    algorithm_flag : req.session.algorithm_flag,
+    id : req.session._id
   })
 })
-
-function undefinedCheck(o) {
-  return o == undefined ? null : o
-}
 
 app.listen(3000, function(err) {
   console.log('Connected!!');

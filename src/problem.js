@@ -29,7 +29,8 @@ router.get('/', function(req, res) {
       }
     }
   }
-  res.render('./ps/problem/problem', {
+  return res.render('./ps/problem/problem', {
+    algorithm_flag : req.session.algorithm_flag,
     id: req.session._id,
     table: table
   })
@@ -64,6 +65,8 @@ router.get('/submit/:number', function(req, res) {
     let type = pb[i].substring(dot + 1)
     if (type == 'txt') {
       return res.render('./ps/problem/submit', {
+        algorithm_flag : req.session.algorithm_flag,
+        ps_flag : req.session.ps_flag,
         id: req.session._id,
         name: name,
         number: number,
@@ -80,7 +83,7 @@ router.post('/score/:number', async function(req, res) {
   let code = req.body.code
   console.log('코드왔어', req.body.code)
   let source = code.split(/\r|\n/g).join("\n");
-  let file = `./../programs/${id}_${number}.c`
+  let file = `./../programs/${id}_${number}.cpp`
 
   await sqlQuery(`IF NOT EXISTS(SELECT * FROM Score WHERE id='${id}' AND problem=${number})
                   BEGIN
@@ -148,6 +151,13 @@ router.post('/score/:number', async function(req, res) {
   }, 5000);
 
   // file 작성
+  if (fs.existsSync(file)) {
+    fs.unlinkSync(file)
+  }
+  let exeFile = `./../programs/${id}_${number}.exe`
+  if (fs.existsSync(exeFile)) {
+    fs.unlinkSync(exeFile)
+  }
   fs.writeFileSync(file, source, 'utf8')
   let compile = spawn('g++', ['-o', `${id}_${number}.exe`, file], {
     cwd: './../programs'
@@ -209,6 +219,7 @@ router.get('/score', async function(req, res) {
     }
   }
   return res.render('./ps/score/score', {
+    algorithm_flag : req.session.algorithm_flag,
     id: req.session._id,
     table: recordset
   })
@@ -244,6 +255,8 @@ router.get('/mycode/:number', async function(req, res) {
     let type = pb[i].substring(dot + 1)
     if (type == 'txt') {
       return res.render('./ps/problem/submit', {
+        algorithm_flag : req.session.algorithm_flag,
+        ps_flag : req.session.ps_flag,
         id: req.session._id,
         name: name,
         number: number,
@@ -260,8 +273,10 @@ router.get('/rank', async function(req, res) {
     SELECT id AS 'id', COUNT(judge) AS 'count'
     FROM Score WHERE judge='맞았습니다!'
     GROUP BY id ORDER BY 'count' DESC`)
+  //console.log(ret)
   if (!ret.recordset) ret.recordset = []
   res.render('./ps/rank/rank', {
+    algorithm_flag : req.session.algorithm_flag,
     id: req.session._id,
     table: ret.recordset
   })

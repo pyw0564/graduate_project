@@ -19,16 +19,18 @@ html
         var send_time = 10, load_time = 10
         var editor = CodeMirror.fromTextArea(textarea, {
           lineNumbers: true,
-          mode:"text/x-csrc",
+          mode : "text/x-csrc",
           theme : "monokai"
-        });
+        })
+        var submit_flag = false
         var submit = document.getElementById('ajax_submit')
         document.querySelector('#ajax_submit').addEventListener('click', function(e) {
-          if (send_time != 10){
+          if (submit_flag) {
             e.preventDefault()
             console.log("제출방지 되었습니다")
             return
           }
+          submit_flag = true
           send_time = 10
           document.getElementById('output').value = ""
           sendAjax('/problem/score/' + number, editor.getValue())
@@ -37,18 +39,20 @@ html
             if (--send_time < 0) {
               submit.value = '제출하기'
               send_time = 10
+              submit_flag = false
               clearInterval(send_listen)
             }
           }, 1000);
         })
         var ajax_post = document.getElementById('ajax_post')
-
+        var load_flag = false
         ajax_post.addEventListener('click', function(e) {
-          if (load_time != 10){
+          if (load_flag){
             e.preventDefault()
             console.log("불러오기방지 되었습니다")
             return
           }
+          load_flag = true
           load_time = 10
           loadAjax('/problem/load/' + number)
           var load_listen = setInterval(function(){
@@ -56,6 +60,7 @@ html
             if (--load_time < 0) {
               ajax_post.value = '불러오기'
               load_time = 10
+              load_flag = false
               clearInterval(load_listen)
             }
           }, 1000);
