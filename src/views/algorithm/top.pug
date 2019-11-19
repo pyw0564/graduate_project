@@ -19,6 +19,7 @@ html
         }
         $(document).on('click', '.direction', function(e) {
           e.preventDefault()
+          console.log(e)
           data = JSON.stringify({
             direction : e.target.id
           })
@@ -33,6 +34,21 @@ html
           else if (form == 'content') url = '/algorithm/createContent'
           sendAjax(url, data)
         })
+        $(document).on('click', "#list_cancel", function(e) {
+          e.preventDefault()
+          data = JSON.stringify({})
+          sendAjax('/algorithm/path', data)
+        })
+        $(document).on('click', "#list_submit", function(e) {
+          e.preventDefault()
+          let form = document.querySelector('#createTable')
+          data = JSON.stringify({
+            name : form.name.value,
+            tableName : form.tableName.value  
+          })
+          sendAjax('/algorithm/createList/post', data)
+        })
+        
       })
     
       //-   $('#algorithm_delete').click(function(e){

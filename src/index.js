@@ -46,7 +46,7 @@ app.locals.pretty = true;
 
 app.get('/', async function(req, res) {
   req.session.algorithm_url = null
-  console.log('세션유지 ->', req.session._id, req.session)
+  console.log('세션 내용', req.session)
   if (!req.session.algorithm_url) {
     console.log('메인에서 초기화되었음')
     req.session.algorithm_url = ['algorithms']

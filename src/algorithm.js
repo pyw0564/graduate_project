@@ -85,7 +85,6 @@ router.post('/flag', async function(req, res) {
   return res.json()
 })
 
-
 router.post('/createList', async function(req, res) {
   console.log(req.session)
   let currPath = req.session.algorithm_url[req.session.url_index]
@@ -97,12 +96,11 @@ router.post('/createList', async function(req, res) {
     render : render
   })
 })
-// 리스트 DB 생성
+
 router.post('/createList/post', async function(req, res) {
-  console.log("도착~")
+  const parent = req.session.algorithm_url[req.session.url_index]
   const name = req.body.name
   const tableName = req.body.tableName
-  const parent = req.body.parent
   const rowQuery = `
   IF NOT EXISTS(SELECT * FROM ${parent} WHERE name='${name}' AND tableName='${tableName}')
     BEGIN
@@ -110,12 +108,12 @@ router.post('/createList/post', async function(req, res) {
     END`
   const tableQuery = `CREATE TABLE ${tableName}(
     	_type NVARCHAR(100) NOT NULL,
-    	name NVARCHAR(100) NOT NULL,
-    	tableName NVARCHAR(100) NOT NULL,
+    	name NVARCHAR(100),
+    	tableName NVARCHAR(100),
     	content NVARCHAR(MAX))`;
   await sqlQuery(rowQuery)
   await sqlQuery(tableQuery)
-  res.redirect('/')
+  return res.redirect('/algorithm/path')
 })
 
 // 내용 생성
@@ -134,7 +132,8 @@ router.post('/createContent', async function(req, res) {
     parent: parent,
     algorithmName_ko: algorithmName_ko,
   })
-  res.json(render)
+
+  return res.json(render)
 })
 // 내용 DB 생성
 router.post('/createContent/post', async function(req, res) {

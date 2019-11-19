@@ -5,29 +5,6 @@ html
       include ./../../../../css/algorithm/algorithm.css
       include ./../../../../css/algorithm/create.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
-    script.
-      $(document).ready(function() {
-        $(document).on('click', '#list_cancel', function(e) {
-          console.log(e)
-          e.preventDefault()
-          data = JSON.stringify({
-          })
-          sendAjax('/algorithm/path', data)
-        })
-        function sendAjax(url, data){
-          let xhr = new XMLHttpRequest()
-          xhr.open('POST', url, true)
-          xhr.setRequestHeader('Content-type','application/json')
-          xhr.send()
-
-          xhr.addEventListener('load', function() {
-            let result = JSON.parse(xhr.responseText)
-            console.log(result)
-            let algorithm_page = document.querySelector('#algorithm')
-            algorithm_page.innerHTML = result.render
-          })
-        }
-      })
   body
     #algorithm_page
       #algorithm_top
@@ -42,5 +19,5 @@ html
           p 테이블 이름 :
             input#tableName(type='text' name='tableName')
           p
-            input#submit(type='submit' value='등록')
+            input#list_submit(type='submit' value='등록')
             input#list_cancel(type='submit' value='취소')
