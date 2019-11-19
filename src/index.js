@@ -7,6 +7,7 @@ const sql = require('mssql')
 const path = require('path')
 const mime = require('mime')
 const spawn = require('child_process').spawn;
+var cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 /* 세션 */
 const session = require('express-session')
@@ -20,13 +21,14 @@ const readDB = config.readDB
 const sqlQuery = config.sqlQuery
 
 app.use(session({ // 세션 init
+  resave: false,
+  saveUninitialized: true,
   secret: 'My!name@is#pyw',
   store: new redisStore({
     client: client
-  }),
-  resave: false,
-  saveUninitialized: true
+  })
 }))
+app.use(cookieParser())
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -44,16 +46,17 @@ app.locals.pretty = true;
 
 app.get('/', async function(req, res) {
   req.session.algorithm_url = null
-  console.log('세션유지 ->', req.session._id)
+  console.log('세션유지 ->', req.session._id, req.session)
   if (!req.session.algorithm_url) {
-    console.log('초기화')
-    req.session.algorithm_flag = false
+    console.log('메인에서 초기화되었음')
     req.session.algorithm_url = ['algorithms']
+    req.session.algorithm_url_KO = ['알고리즘 레퍼런스']
     req.session.url_index = 0
+    req.session.algorithm_flag = false
   }
   res.render("main", {
-    algorithm_flag : req.session.algorithm_flag,
-    id : req.session._id
+    algorithm_flag: req.session.algorithm_flag,
+    id: req.session._id
   })
 })
 

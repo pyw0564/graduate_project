@@ -10,6 +10,7 @@ const sqlQuery = config.sqlQuery
 
 // 메인
 router.get('/', function(req, res) {
+  console.log('문제 메인 세션', req.session)
   if (!req.session._id) return res.send(redirect_main('로그인이 되어 있지 않습니다'))
   let table = {}
   let path = './../problem'
@@ -30,7 +31,7 @@ router.get('/', function(req, res) {
     }
   }
   return res.render('./ps/problem/problem', {
-    algorithm_flag : req.session.algorithm_flag,
+    algorithm_flag: req.session.algorithm_flag,
     id: req.session._id,
     table: table
   })
@@ -65,8 +66,8 @@ router.get('/submit/:number', function(req, res) {
     let type = pb[i].substring(dot + 1)
     if (type == 'txt') {
       return res.render('./ps/problem/submit', {
-        algorithm_flag : req.session.algorithm_flag,
-        ps_flag : req.session.ps_flag,
+        algorithm_flag: req.session.algorithm_flag,
+        ps_flag: req.session.ps_flag,
         id: req.session._id,
         name: name,
         number: number,
@@ -81,11 +82,11 @@ router.post('/score/:number', async function(req, res) {
   let id = req.session._id
   let number = req.params.number
   let code = req.body.code
-  console.log('코드왔어', req.body.code)
+  console.log('코드왔어요', req.body.code)
   let source = code.split(/\r|\n/g).join("\n");
   let file = `./../programs/${id}_${number}.cpp`
 
-  await sqlQuery(`IF NOT EXISTS(SELECT * FROM Score WHERE id='${id}' AND problem=${number})
+  sqlQuery(`IF NOT EXISTS(SELECT * FROM Score WHERE id='${id}' AND problem=${number})
                   BEGIN
                     INSERT INTO Score(id,problem,code,judge)
                     VALUES('${id}',${number},'${code}',null)
@@ -111,44 +112,6 @@ router.post('/score/:number', async function(req, res) {
   let answer_path = './../problem/' + number + '/answer'
   let datadir = fs.readdirSync(data_path)
   let answerdir = fs.readdirSync(answer_path)
-
-  let AC_function = setTimeout(async function() {
-    console.log('결과/정보', count, datadir.length)
-    if (flag.CE) {
-      clearTimeout(TLE_function)
-      return res.json(responseData)
-    }
-    if (flag.RE) {
-      clearTimeout(TLE_function)
-      responseData.result = '런타임 에러'
-      responseData.output = ''
-      return res.json(responseData)
-    }
-    if (count == datadir.length) {
-      clearTimeout(TLE_function)
-      console.log(responseData)
-      await sqlQuery(`UPDATE Score SET judge='맞았습니다!' WHERE id='${id}' AND problem=${number}`)
-      return res.json(responseData)
-    } else if (flag.WA) {
-      clearTimeout(TLE_function)
-      responseData.result = '틀렸습니다'
-      await sqlQuery(`UPDATE Score SET judge='틀렸습니다' WHERE id='${id}' AND problem=${number}`)
-      return res.json(responseData)
-    }
-  }, 3000);
-
-  // TLE 함수
-  var TLE_function = setTimeout(async function() {
-    if (flag.TLE) {
-      responseData.result = '시간 초과'
-      responseData.output = 'TIME LIMIT EXCEED!!'
-      await sqlQuery(`UPDATE Score SET judge='시간 초과' WHERE id='${id}' AND problem=${number}`)
-      console.log(responseData)
-      await clearTimeout(AC_function)
-      return res.json(responseData)
-    }
-    clearTimeout(TLE_function)
-  }, 5000);
 
   // file 작성
   if (fs.existsSync(file)) {
@@ -178,6 +141,42 @@ router.post('/score/:number', async function(req, res) {
 
   // close
   compile.on('close', async function(data) {
+    let AC_function = setTimeout(async function() {
+      console.log('결과/정보', count, datadir.length)
+      if (flag.CE) {
+        clearTimeout(TLE_function)
+        return res.json(responseData)
+      }
+      if (flag.RE) {
+        clearTimeout(TLE_function)
+        responseData.result = '런타임 에러'
+        responseData.output = ''
+        return res.json(responseData)
+      }
+      if (count == datadir.length) {
+        clearTimeout(TLE_function)
+        console.log(responseData)
+        await sqlQuery(`UPDATE Score SET judge='맞았습니다!' WHERE id='${id}' AND problem=${number}`)
+        return res.json(responseData)
+      } else if (flag.WA) {
+        clearTimeout(TLE_function)
+        responseData.result = '틀렸습니다'
+        await sqlQuery(`UPDATE Score SET judge='틀렸습니다' WHERE id='${id}' AND problem=${number}`)
+        return res.json(responseData)
+      }
+    }, 3000);
+
+    // TLE 함수
+    var TLE_function = setTimeout(async function() {
+      if (flag.TLE) {
+        responseData.result = '시간 초과'
+        responseData.output = 'TIME LIMIT EXCEED!!'
+        await sqlQuery(`UPDATE Score SET judge='시간 초과' WHERE id='${id}' AND problem=${number}`)
+        console.log(responseData)
+        await clearTimeout(AC_function)
+        return res.json(responseData)
+      }
+    }, 7000);
     if (data == 0) { // return 0
       datadir.forEach(function(element, i) {
         const subtask = spawn(`./../programs/${id}_${number}.exe`)
@@ -208,6 +207,7 @@ router.post('/score/:number', async function(req, res) {
 
 // 랭크 창
 router.get('/score', async function(req, res) {
+  console.log('스코어 플래그', req.session)
   if (!req.session._id) return res.send(redirect_main('로그인이 되어 있지 않습니다'))
   let recordset = await sqlQuery(`SELECT * FROM Score WHERE id='${req.session._id}'`)
   recordset = recordset.recordset
@@ -219,7 +219,7 @@ router.get('/score', async function(req, res) {
     }
   }
   return res.render('./ps/score/score', {
-    algorithm_flag : req.session.algorithm_flag,
+    algorithm_flag: req.session.algorithm_flag,
     id: req.session._id,
     table: recordset
   })
@@ -255,8 +255,8 @@ router.get('/mycode/:number', async function(req, res) {
     let type = pb[i].substring(dot + 1)
     if (type == 'txt') {
       return res.render('./ps/problem/submit', {
-        algorithm_flag : req.session.algorithm_flag,
-        ps_flag : req.session.ps_flag,
+        algorithm_flag: req.session.algorithm_flag,
+        ps_flag: req.session.ps_flag,
         id: req.session._id,
         name: name,
         number: number,
@@ -268,6 +268,7 @@ router.get('/mycode/:number', async function(req, res) {
 
 // 랭크 페이지
 router.get('/rank', async function(req, res) {
+  console.log('랭크 플래그', req.session)
   if (!req.session._id) return res.send(redirect_main('로그인이 되어 있지 않습니다'))
   let ret = await sqlQuery(`
     SELECT id AS 'id', COUNT(judge) AS 'count'
@@ -276,11 +277,12 @@ router.get('/rank', async function(req, res) {
   //console.log(ret)
   if (!ret.recordset) ret.recordset = []
   res.render('./ps/rank/rank', {
-    algorithm_flag : req.session.algorithm_flag,
+    algorithm_flag: req.session.algorithm_flag,
     id: req.session._id,
     table: ret.recordset
   })
 })
+
 
 // Alert와 메인으로 가는 함수
 function redirect_main(message) {

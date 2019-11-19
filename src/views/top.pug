@@ -7,34 +7,23 @@ html
       $(document).ready(function() {
         var ps_flag = true
         var algorithm_flag = !{JSON.stringify(algorithm_flag)}
-        console.log(ps_flag, algorithm_flag)
+        //- console.log('알고리즘플래그', algorithm_flag)
         color_change("#ps_btn", ps_flag)
         color_change("#algorithm_btn", algorithm_flag)
         dynamic_width(algorithm_flag, ps_flag)
+        algorithm_ajax(algorithm_flag)
         $("#algorithm_btn").click(function() {
           algorithm_flag = !algorithm_flag
           color_change("#algorithm_btn", algorithm_flag)
           dynamic_width(algorithm_flag, ps_flag)
-          send_ajax(algorithm_flag, ps_flag)
+          algorithm_ajax(algorithm_flag)
         })
         $("#ps_btn").click(function() {
           ps_flag = !ps_flag
           color_change("#ps_btn", ps_flag)
           dynamic_width(algorithm_flag, ps_flag)
-          send_ajax(algorithm_flag, ps_flag)
+          algorithm_ajax(algorithm_flag)
         })
-        function send_ajax(algorithm_flag, ps_flag) {
-          var url = '/algorithm/flag'
-          var data = JSON.stringify({
-            ps_flag : ps_flag,
-            algorithm_flag : algorithm_flag
-          })
-          var xhr = new XMLHttpRequest()
-          xhr.open('POST', url, true)
-          xhr.setRequestHeader('Content-type', 'application/json')
-          xhr.send(data)
-          
-        }
         function color_change(name, flag) {
           if (flag)
             $(name).css('background-color', '#ffe591')
@@ -53,7 +42,6 @@ html
             ).css(
               'display', 'block'
             )
-            algorithm_ajax()
           }
           else if (algorithm_flag) {
             $("#algorithm").css(
@@ -64,7 +52,6 @@ html
             $("#ps").css(
               'display', 'none'
             )
-            algorithm_ajax()
           }
           else if (ps_flag) {
             $("#algorithm").css(
@@ -85,18 +72,30 @@ html
             )
           }
         }
-        function algorithm_ajax(){
-          var url = '/algorithm/path'
-          var xhr = new XMLHttpRequest()
+        function algorithm_ajax(algorithm_flag){
+          test_ajax(algorithm_flag)
+          console.log("알고리즘 플래그", algorithm_flag)
+          let url = '/algorithm/path'
+          let xhr = new XMLHttpRequest()
           xhr.open('POST', url, true)
           xhr.setRequestHeader('Content-type','application/json')
           xhr.send()
           
           xhr.addEventListener('load', function() {
-            var result = JSON.parse(xhr.responseText)
-            var algorithm_page = document.querySelector('#algorithm')
+            let result = JSON.parse(xhr.responseText)
+            let algorithm_page = document.querySelector('#algorithm')
             algorithm_page.innerHTML = result.render
           })
+        }
+        function test_ajax(algorithm_flag){
+          console.log("알고리즘 플래그, test_ajax", algorithm_flag)
+          let url = '/algorithm/flag'
+          let xhr = new XMLHttpRequest()
+          xhr.open('POST', url, true)
+          xhr.setRequestHeader('Content-type','application/json')
+          xhr.send(JSON.stringify({
+            algorithm_flag : algorithm_flag
+          }))
         }
       })
   body

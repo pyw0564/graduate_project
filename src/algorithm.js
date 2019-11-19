@@ -9,12 +9,6 @@ const mime = require('mime')
 const spawn = require('child_process').spawn;
 const bodyParser = require('body-parser');
 
-// /* 세션 */
-// const session = require('express-session')
-// const Redis = require('redis') // 레디스
-// const client = Redis.createClient() // 레디스
-// var redisStore = require('connect-redis')(session) // 레디스
-
 const sqlQuery = data.sqlQuery
 
 router.use(bodyParser.urlencoded({
@@ -26,9 +20,11 @@ router.use('/', express.static(__dirname + '/../'));
 
 // 패스
 router.post('/path', async function(req, res) {
+  // console.log('패스처리', req.session)
   let bodyPath = req.body.path
   let direction = req.body.direction
   let sessionURL = req.session.algorithm_url
+  let sessionURL_KO = req.session.algorithm_url_KO
   if (direction) {
     if (direction == 'back_btn' && 0 < req.session.url_index) {
       req.session.url_index -= 1
@@ -43,7 +39,6 @@ router.post('/path', async function(req, res) {
     sessionURL.splice(req.session.url_index, 0, url)
     sessionURL.splice(req.session.url_index + 1)
   }
-  console.log(sessionURL, req.session.url_index)
   url = sessionURL[req.session.url_index]
   let path = url.split('/')
   path = path[path.length - 1]
@@ -64,8 +59,11 @@ router.post('/path', async function(req, res) {
       content = records[i].content
     } else if (type == 'title') {
       title = records[i].content
+      sessionURL_KO.splice(req.session.url_index, 0, title)
+      sessionURL_KO.splice(req.session.url_index + 1)
     }
   }
+  // console.log(req.session)
   // console.log(sub, title, content)
   let renderPug = pug.renderFile('./views/algorithm/main.pug', {
     id: req.session._id,
@@ -81,70 +79,71 @@ router.post('/path', async function(req, res) {
 
 // flag
 router.post('/flag', async function(req, res) {
-  console.log(req.session.algorithmFlag, req.session._id)
-  req.session.algorithmFlag = true
-  console.log(req.session.algorithmFlag)
+  // console.log('before 플래그',req.session)
+  req.session.algorithm_flag = req.body.algorithm_flag
+  // console.log('after 플래그',req.session)
+  return res.json()
 })
 
-// router.post('/createList', async function(req, res) {
-//   const parent = req.body.parent
-//   const algorithmName_ko = req.body.algorithmName_ko
-//   const algorithm_list = req.body.algorithm_list
-//   const algorithm_content_list = req.body.algorithm_content_list
-//   let render = pug.renderFile('./views/algorithm/create/list.pug', {
-//     parent: parent,
-//     algorithmName_ko: algorithmName_ko,
-//     algorithm_content_list: algorithm_content_list,
-//     algorithm_list: algorithm_list
-//   })
-//   res.json(render)
-// })
-// // 리스트 DB 생성
-// router.post('/createList/post', async function(req, res) {
-//   const name = req.body.name
-//   const tableName = req.body.tableName
-//   const parent = req.body.parent
-//   const rowQuery = `
-//   IF NOT EXISTS(SELECT * FROM ${parent} WHERE name='${name}' AND tableName='${tableName}')
-//     BEGIN
-//       INSERT INTO ${parent} VALUES('sub', '${name}', '${tableName}', '');
-//     END`
-//   const tableQuery = `CREATE TABLE ${tableName}(
-//     	_type NVARCHAR(100) NOT NULL,
-//     	name NVARCHAR(100) NOT NULL,
-//     	tableName NVARCHAR(100) NOT NULL,
-//     	content NVARCHAR(MAX))`;
-//   await sqlQuery(rowQuery)
-//   await sqlQuery(tableQuery)
-//   res.redirect('/')
-// })
-//
-// // 내용 생성
-// router.post('/createContent', async function(req, res) {
-//   const parent = req.body.parent
-//   const algorithmName_ko = req.body.algorithmName_ko
-//   let contentCheck = await sqlQuery(`SELECT * FROM ${parent} WHERE _type='content'`)
-//   if (contentCheck.recordset.length) {
-//     res.json({
-//       result: 'NO',
-//       err: '이미 내용이 존재합니다'
-//     })
-//     return;
-//   }
-//   let render = pug.renderFile('./views/algorithm/create/content.pug', {
-//     parent: parent,
-//     algorithmName_ko: algorithmName_ko,
-//   })
-//   res.json(render)
-// })
-// // 내용 DB 생성
-// router.post('/createContent/post', async function(req, res) {
-//   const content = req.body.txt
-//   const parent = req.body.parent
-//   const query = `INSERT INTO ${parent} VALUES('content', '', '', '${content}');`
-//   sqlQuery(query)
-//   res.redirect('/')
-// })
+
+router.post('/createList', async function(req, res) {
+  console.log(req.session)
+  let currPath = req.session.algorithm_url[req.session.url_index]
+  let algorithmName_ko = req.session.algorithm_url_KO[req.session.url_index]
+  let render = pug.renderFile('./views/algorithm/create/list.pug', {
+    algorithmName_ko : algorithmName_ko
+  })
+  return res.json({
+    render : render
+  })
+})
+// 리스트 DB 생성
+router.post('/createList/post', async function(req, res) {
+  console.log("도착~")
+  const name = req.body.name
+  const tableName = req.body.tableName
+  const parent = req.body.parent
+  const rowQuery = `
+  IF NOT EXISTS(SELECT * FROM ${parent} WHERE name='${name}' AND tableName='${tableName}')
+    BEGIN
+      INSERT INTO ${parent} VALUES('sub', '${name}', '${tableName}', '');
+    END`
+  const tableQuery = `CREATE TABLE ${tableName}(
+    	_type NVARCHAR(100) NOT NULL,
+    	name NVARCHAR(100) NOT NULL,
+    	tableName NVARCHAR(100) NOT NULL,
+    	content NVARCHAR(MAX))`;
+  await sqlQuery(rowQuery)
+  await sqlQuery(tableQuery)
+  res.redirect('/')
+})
+
+// 내용 생성
+router.post('/createContent', async function(req, res) {
+  const parent = req.body.parent
+  const algorithmName_ko = req.body.algorithmName_ko
+  let contentCheck = await sqlQuery(`SELECT * FROM ${parent} WHERE _type='content'`)
+  if (contentCheck.recordset.length) {
+    res.json({
+      result: 'NO',
+      err: '이미 내용이 존재합니다'
+    })
+    return;
+  }
+  let render = pug.renderFile('./views/algorithm/create/content.pug', {
+    parent: parent,
+    algorithmName_ko: algorithmName_ko,
+  })
+  res.json(render)
+})
+// 내용 DB 생성
+router.post('/createContent/post', async function(req, res) {
+  const content = req.body.txt
+  const parent = req.body.parent
+  const query = `INSERT INTO ${parent} VALUES('content', '', '', '${content}');`
+  sqlQuery(query)
+  res.redirect('/')
+})
 // // 리스트 수정
 // router.post('/algorithm/modifyList', async function(req, res) {
 //
