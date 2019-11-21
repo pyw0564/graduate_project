@@ -9,13 +9,12 @@ html
     #algorithm_page
       form#createTable(method='post' action='/algorithm/createContent/post')
         #algorithm_top
-          #algorithm_top_banner
-            h1
+          h1#algorithm_top_banner
             | "
-            input(type='text' name='title' value=algorithmName_ko)
+            input#algorithm_create_title(type='text' name='title' value=algorithmName_ko)
             | "
         #algorithm_content
           textarea#content_textarea(style='resize:none' name='content')= content
           p
-            input.algorithm_cancel#content_submit(type='submit' value='등록')
-            input.algorithm_cancel#content_cancel(type='submit' value='취소')
+            input.algorithm_cancel.algorithm_top_Btn#content_submit(type='submit' value='등록')
+            input.algorithm_cancel.algorithm_top_Btn#content_cancel(type='submit' value='취소')

@@ -7,13 +7,15 @@ html
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script.
       $(document).ready(function() {
-        var textarea = document.getElementById('content_textarea')
-        var editor
-        if (textarea) {
-          editor = CodeMirror.fromTextArea(textarea, {
+        var textarea_readonly = document.getElementById('content_textarea_readonly')
+        if (textarea_readonly) {
+          editor = CodeMirror.fromTextArea(textarea_readonly, {
             lineNumbers: true,
             mode : "text/x-csrc",
-            theme : "monokai"
+            theme : "monokai",
+            lineWrapping: true, 
+            matchBrackets: true,
+            readOnly : true
           })
         }
         function sendAjax(url, data) {
@@ -35,8 +37,21 @@ html
             if (textarea) {
               editor = CodeMirror.fromTextArea(textarea, {
                 lineNumbers: true,
+                lineWrapping: true, 
+                matchBrackets: true,
                 mode : "text/x-csrc",
-                theme : "monokai"
+                theme : "monokai",
+              })
+            }
+            var textarea_readonly = document.getElementById('content_textarea_readonly')
+            if (textarea_readonly) {
+              editor = CodeMirror.fromTextArea(textarea_readonly, {
+                lineNumbers: true,
+                mode : "text/x-csrc",
+                theme : "monokai",
+                lineWrapping: true, 
+                matchBrackets: true,
+                readOnly : true
               })
             }
           })
@@ -49,6 +64,7 @@ html
           })
           sendAjax('/algorithm/path', data);
         })
+        /* 생성 / 수정 구현 */
         $(document).on('click', "#algorithm_create", function(e) {
           e.preventDefault()
           var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
@@ -58,18 +74,19 @@ html
           else if (form == 'content') url = '/algorithm/createContent'
           sendAjax(url, data)
         })
-        //- $(document).on('click', "#algorithm_create", function(e) {
-        //-   e.preventDefault()
-        //-   var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
-        //-   var data = JSON.stringify({})
-        //-   var url
-        //-   if (form == 'list') url = '/algorithm/createList'
-        //-   else if (form == 'content') url = '/algorithm/createContent'
-        //-   sendAjax(url, data)
-        //- })
-
-
-
+        /* 삭제 구현 */
+        $(document).on('click', "#algorithm_delete", function(e) {
+          e.preventDefault()
+          if (confirm(`현재 페이지를 삭제 하시겠습니까??`)) {
+            var form = document.querySelector('#algorithm_top_form input[name="choose"]:checked').value
+            var data = JSON.stringify({})
+            var url
+            if (form == 'list') url = '/algorithm/deletePage'
+            sendAjax(url, data)
+          }
+        })
+        
+        /* 리스트 취소, 전송 */
         $(document).on('click', "#list_cancel", function(e) {
           e.preventDefault()
           data = JSON.stringify({})
@@ -77,13 +94,14 @@ html
         })
         $(document).on('click', "#list_submit", function(e) {
           e.preventDefault()
-          let form = document.querySelector('#createTable')
+          let form = document.querySelector('#createTable_list')
           data = JSON.stringify({
             name : form.name.value,
             tableName : form.tableName.value  
           })
           sendAjax('/algorithm/createList/post', data)
         })
+        /* 컨텐츠 취소, 전송 */
         $(document).on('click', "#content_cancel", function(e) {
           e.preventDefault()
           data = JSON.stringify({})
@@ -163,4 +181,4 @@ html
             |제목/내용
           #algorithm_top_btns
             input#algorithm_create.algorithm_top_Btn(type='submit' value='생성/수정')
-            input#algorithm_delete.algorithm_top_Btn(type='submit' value='삭제')
+            input#algorithm_delete.algorithm_top_Btn(type='submit' value='페이지삭제')

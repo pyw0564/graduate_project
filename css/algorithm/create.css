@@ -1,15 +1,37 @@
 #name {
+  height: 50px;
+  width: 200px;
   margin: 10px;
 }
 
 #tableName {
+  height: 50px;
+  width: 200px;
   margin: 10px;
 }
-.algorithm_submit{
-  height:30px;
-  width:150px;
+
+.algorithm_submit {
+  height: 30px;
+  width: 150px;
 }
-.algorithm_cancel{
-  height:30px;
-  width:150px;
+
+.algorithm_cancel {
+  margin:20px;
+  height: 30px;
+  width: 150px;
+}
+
+/* Create List */
+#algorithm_top_banner {
+  color: white;
+}
+#algorithm_create_title{
+  width:80%;
+  font-size: 30px;
+  text-align: center;
+}
+#createTable_list {
+  align-items: center;
+  align-content: center;
+  text-align: center;
 }

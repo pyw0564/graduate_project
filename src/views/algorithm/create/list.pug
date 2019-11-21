@@ -8,16 +8,15 @@ html
   body
     #algorithm_page
       #algorithm_top
-        #algorithm_top_banner
-          h1|"
-            =algorithmName_ko
-            |"에서 리스트 생성하기
+        h1#algorithm_top_banner|"
+          =algorithmName_ko
+          |"에서 리스트 생성하기
       #algorithm_content
-        form#createTable(action='/algorithm/createList/post' method='post')
-          p 한글 이름 :
+        form#createTable_list(action='/algorithm/createList/post' method='post')
+          p 한글 이름 
             input#name(type='text' name='name')
-          p 테이블 이름 :
+          p 테이블 이름 
             input#tableName(type='text' name='tableName')
           p
-            input.algorithm_cancel#list_submit(type='submit' value='등록')
-            input.algorithm_cancel#list_cancel(type='submit' value='취소')
+            input.algorithm_cancel.algorithm_top_Btn#list_submit(type='submit' value='등록')
+            input.algorithm_cancel.algorithm_top_Btn#list_cancel(type='submit' value='취소')

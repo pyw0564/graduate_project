@@ -78,11 +78,11 @@ INSERT INTO test VALUES('title', '', '', Å×½ºÆ®¤¾¤¾)
 UPDATE algorithms SET tableName='¤Ñ¤Ñ¹ºµ¥' WEHRE _type='sub' AND tableName='HELLO'
 /* 
 drop table algorithms
-drop table test
+drop table test5
 drop table undefined
 DELETE FROM algorithms;
 DELETE FROM basicAlgorithm;
-DELETE FROM algorithms WHERE _type = 'title';
+DELETE FROM hello WHERE _type = 'sub'
 DELETE FROM basicAlgorithm WHERE name = '¿ÏÀüÅ½»ö';
 drop table basicAlgorithm
 */

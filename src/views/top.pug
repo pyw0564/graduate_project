@@ -2,9 +2,28 @@ doctype html
 html
   head
     style
+      include ./../../bower_components/codemirror-5.49.2/lib/codemirror.css
+      include ./../../bower_components/codemirror-5.49.2/theme/monokai.css
+      include ./../../css/main.css
       include ./../../css/top.css
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(type='text/javascript' src="./../../bower_components/codemirror-5.49.2/lib/codemirror.js")
+    script(type='text/javascript' src="./../../bower_components/codemirror-5.49.2/mode/clike/clike.js")
     script(type='text/javascript').
       $(document).ready(function() {
+        var textarea_readonly = document.getElementById('content_textarea_readonly')
+        var editor
+        if (textarea_readonly) {
+          editor = CodeMirror.fromTextArea(textarea_readonly, {
+            lineNumbers: true,
+            mode : "text/x-csrc",
+            theme : "monokai",
+            lineWrapping: true, 
+            matchBrackets: true,
+            readOnly : true
+          })
+        }
         var ps_flag = true
         var algorithm_flag = !{JSON.stringify(algorithm_flag)}
         //- console.log('알고리즘플래그', algorithm_flag)
@@ -86,13 +105,15 @@ html
             let result = JSON.parse(xhr.responseText)
             let algorithm_page = document.querySelector('#algorithm')
             algorithm_page.innerHTML = result.render
-            var textarea = document.getElementById('content_textarea')
+            var textarea_readonly = document.getElementById('content_textarea_readonly')
             var editor
-            if (textarea) {
-              editor = CodeMirror.fromTextArea(textarea, {
+            if (textarea_readonly) {
+              editor = CodeMirror.fromTextArea(textarea_readonly, {
                 lineNumbers: true,
                 mode : "text/x-csrc",
                 theme : "monokai",
+                lineWrapping: true, 
+                matchBrackets: true,
                 readOnly : true
               })
             }

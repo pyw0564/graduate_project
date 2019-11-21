@@ -20,13 +20,15 @@ html
           var result = JSON.parse(xhr.responseText)
           var algorithm_page = document.querySelector('#algorithm')
           algorithm_page.innerHTML = result.render
-          var textarea = document.getElementById('content_textarea')
+          var textarea = document.getElementById('content_textarea_readonly')
           var editor
           if (textarea) {
             editor = CodeMirror.fromTextArea(textarea, {
               lineNumbers: true,
               mode : "text/x-csrc",
               theme : "monokai",
+              lineWrapping: true, 
+              matchBrackets: true,
               readOnly : true
             })
           }

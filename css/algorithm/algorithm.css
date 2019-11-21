@@ -80,9 +80,9 @@
 }
 
 #algorithm_top_radio {
-  background-color: #ffff01;
   margin: 10px;
   margin-bottom: 20px;
+  color:white;
 }
 
 #algorithm_top_btns {
@@ -91,6 +91,8 @@
 
 /* 여기부터 content list */
 #algorithm_content_list {
+  overflow-y: auto;
+  max-height: 20%;
   margin-top: 30px;
   border: 1px solid black;
 }
@@ -115,7 +117,13 @@
 
 /* 여기부터 content */
 #algorithm_content {
+  height: 60%;
   margin-top: 30px;
   border: 1px solid black;
   padding: 20px;
+}
+
+.CodeMirror {
+  height: 100%;
+  max-height: 100%;
 }

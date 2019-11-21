@@ -102,7 +102,7 @@ router.post('/path', async function(req, res) {
     }
   }
   // console.log(req.session)
-  console.log(sub, title, content)
+  // console.log(sub, title, content)
   let renderPug = pug.renderFile('./views/algorithm/main.pug', {
     id: req.session._id,
     sub: sub,
@@ -178,8 +178,8 @@ router.post('/createContent', async function(req, res) {
 })
 // 내용 DB 생성
 router.post('/createContent/post', async function(req, res) {
-  const title = req.body.title
-  const content = req.body.content
+  let title = req.body.title
+  let content = req.body.content
   let currPath = req.session.algorithm_url[req.session.url_index]
   let algorithmName_ko = req.session.algorithm_url_KO[req.session.url_index]
   // 제목 갱신
@@ -214,17 +214,19 @@ router.post('/createContent/post', async function(req, res) {
   await (async function() {
     let query = `SELECT * FROM ${currPath} WHERE _type='content'`
     let records = await sqlQuery(query)
+    content = content.replace(/'/gi, "''")
     if (records.recordset && records.recordset.length) {
       query = `UPDATE ${currPath} SET content='${content}' WHERE _type='content'`
-      // console.log("UPDATE")
+      console.log("UPDATE")
       // console.log(query)
-      await sqlQuery(query)
+      let record = await sqlQuery(query)
+      // console.log(record)
       // console.log(req.session.url_index)
 
     } else {
       query = `INSERT INTO ${currPath} VALUES('content', '', '', '${content}')`
-      // console.log("INSERT")
-      // console.log(query)
+      console.log("INSERT")
+      console.log(query)
       await sqlQuery(query)
     }
   })()
@@ -232,64 +234,27 @@ router.post('/createContent/post', async function(req, res) {
   return res.redirect('/algorithm/path')
 })
 
-// // 리스트 수정
-// router.post('/algorithm/modifyList', async function(req, res) {
-//
-// })
-// router.post('/algorithm/deleteList', async function(req, res) {
-//   const algorithmName_ko = req.body.algorithmName_ko
-//   const algorithm_list = req.body.algorithm_list
-//   const algorithm_content_list = req.body.algorithm_content_list
-//   const tableName = req.body.tableName
-//
-//   console.log("hi", tableName)
-// })
-// router.post('/algorithm/delete/:form', async function(req, res) {
-//   const parent = req.body.parent
-//   const algorithmName_ko = req.body.algorithmName_ko
-//   const algorithm_list = req.body.algorithm_list
-//   const algorithm_content_list = req.body.algorithm_content_list
-//   const form = req.params.form
-//   console.log('hi', form)
-//   if (form == 'list') {
-//     let render = pug.renderFile('./views/algorithm/delete/list.pug', {
-//       algorithmName_ko: undefinedCheck(algorithmName_ko),
-//       algorithm_list: undefinedCheck(algorithm_list),
-//       algorithm_content_list: undefinedCheck(algorithm_content_list)
-//     })
-//     res.json(render)
-//     return
-//   } else if (form == 'content') {
-//     let selectQuery = `SELECT * FROM ${parent} WHERE _type='content'`
-//     let ret = await sqlQuery(selectQuery)
-//     if (ret.recordset.length) {
-//       let deleteQuery = `DELETE FROM ${parent} WHERE _type='content'`
-//       await sqlQuery(deleteQuery)
-//       res.json({
-//         result: "YES",
-//       })
-//       return
-//     } else {
-//       res.json({
-//         result: "NO",
-//         err: "현재 내용이 존재하지 않습니다"
-//       })
-//     }
-//   } else if (form == 'table') {
-//
-//   } else return
-// })
-//
-// router.post('/algorithm/:algorithmName', async function(req, res) {
-//   var object = {
-//     algorithmName: undefinedCheck(req.body.algorithmName),
-//     algorithmName_ko: undefinedCheck(req.body.algorithmName_ko),
-//     algorithm_list: undefinedCheck(req.body.algorithm_list),
-//     algorithm_content: undefinedCheck(req.body.algorithm_list.content),
-//     algorithm_content_list: undefinedCheck(makeAlgorithmList(req.body.algorithm_list))
-//   }
-//   let render = pug.renderFile('./views/algorithm/main.pug', object)
-//   res.json(render)
-// })
+
+// 삭제
+router.post('/deletePage', async function(req, res) {
+  console.log("세션 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ", req.session)
+  let currPath = req.session.algorithm_url[req.session.url_index]
+  let algorithmName_ko = req.session.algorithm_url_KO[req.session.url_index]
+
+  console.log(`DROP TABLE ${currPath}`)
+  await sqlQuery(`DROP TABLE ${currPath}`)
+  req.session.url_index -= 1
+  req.session.algorithm_url.pop()
+  req.session.algorithm_url_KO.pop()
+  console.log("세션 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ", req.session)
+
+  if (req.session.url_index >= 0) {
+    let prevPath = req.session.algorithm_url[req.session.url_index]
+    query = `DELETE FROM ${prevPath} WHERE tableName='${currPath}'`
+    console.log(query)
+    await sqlQuery(query)
+  }
+  return res.redirect('/algorithm/path')
+})
 
 module.exports = router
