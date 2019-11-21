@@ -1,21 +1,21 @@
 doctype html
 html
   head
+    style
+      include ./../../../../css/algorithm/algorithm.css
+      include ./../../../../css/algorithm/create.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
-    script.
-      $(document).ready(function(){
-        var txt = document.getElementById('txt');
-        tabOverride.set(txt);
-      })
   body
-
-    h1| "
-      = algorithmName_ko
-      | "에서 내용생성
-      | By Pug 
-    form#createTable(method='post' action='/algorithm/createContent/post')
-      input(type='hidden' id='CreateHidden' name='parent' value=parent)
-      p 내용
-        textarea#txt(cols='100' rows='30' name='txt')
-      p
-        input#submit(type='submit' value='등록')
+    #algorithm_page
+      form#createTable(method='post' action='/algorithm/createContent/post')
+        #algorithm_top
+          #algorithm_top_banner
+            h1
+            | "
+            input(type='text' name='title' value=algorithmName_ko)
+            | "
+        #algorithm_content
+          textarea#content_textarea(style='resize:none' name='content')= content
+          p
+            input.algorithm_cancel#content_submit(type='submit' value='등록')
+            input.algorithm_cancel#content_cancel(type='submit' value='취소')

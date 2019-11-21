@@ -5,13 +5,11 @@
 #tableName {
   margin: 10px;
 }
-
-#submit{
+.algorithm_submit{
   height:30px;
   width:150px;
 }
-
-#cancel{
+.algorithm_cancel{
   height:30px;
   width:150px;
 }

@@ -2,8 +2,13 @@ doctype html
 html(lang='en')
   head
     style
+      include ./../../bower_components/codemirror-5.49.2/lib/codemirror.css
+      include ./../../bower_components/codemirror-5.49.2/theme/monokai.css
       include ./../../css/main.css
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script(type='text/javascript' src="./../../bower_components/codemirror-5.49.2/lib/codemirror.js")
+    script(type='text/javascript' src="./../../bower_components/codemirror-5.49.2/mode/clike/clike.js")
   body
     #main_page
       include top.pug
@@ -12,3 +17,5 @@ html(lang='en')
           include ./ps/main.pug
         #algorithm
           include ./algorithm/main.pug
+    
+    

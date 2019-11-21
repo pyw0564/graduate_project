@@ -17,6 +17,7 @@ html
           color_change("#algorithm_btn", algorithm_flag)
           dynamic_width(algorithm_flag, ps_flag)
           algorithm_ajax(algorithm_flag)
+
         })
         $("#ps_btn").click(function() {
           ps_flag = !ps_flag
@@ -85,6 +86,16 @@ html
             let result = JSON.parse(xhr.responseText)
             let algorithm_page = document.querySelector('#algorithm')
             algorithm_page.innerHTML = result.render
+            var textarea = document.getElementById('content_textarea')
+            var editor
+            if (textarea) {
+              editor = CodeMirror.fromTextArea(textarea, {
+                lineNumbers: true,
+                mode : "text/x-csrc",
+                theme : "monokai",
+                readOnly : true
+              })
+            }
           })
         }
         function test_ajax(algorithm_flag){

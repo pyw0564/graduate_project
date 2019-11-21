@@ -2,13 +2,14 @@ doctype html
 html
   head
     script(type='text/javascript').
-      $(document).on('click', '.algorithmMenu', function(e){
-        sendAjax('/algorithm/path', e.target.id);
+      $(document).on('click', '.algorithmMenu', function(e) {
+        sendAjax('/algorithm/path', e.target.id, e.target.innerText);
       })
-      function sendAjax(url, path){
+      function sendAjax(url, path, path_KO){
         //- console.log("전송중")
         data = JSON.stringify({
-          path : path
+          path : path,
+          path_KO : path_KO
         })
         var xhr = new XMLHttpRequest()
         xhr.open('POST', url, true)
@@ -19,6 +20,16 @@ html
           var result = JSON.parse(xhr.responseText)
           var algorithm_page = document.querySelector('#algorithm')
           algorithm_page.innerHTML = result.render
+          var textarea = document.getElementById('content_textarea')
+          var editor
+          if (textarea) {
+            editor = CodeMirror.fromTextArea(textarea, {
+              lineNumbers: true,
+              mode : "text/x-csrc",
+              theme : "monokai",
+              readOnly : true
+            })
+          }
         })
       }
   body

@@ -56,7 +56,6 @@ DROP TABLE Users
 DROP TABLE Rank
 */
 
-
 CREATE TABLE algorithms(
 	_type NVARCHAR(100) NOT NULL,
 	name NVARCHAR(100),
@@ -71,10 +70,16 @@ INSERT INTO algorithms VALUES('sub','안고급 알고리즘2', 'not2advancedAlgorithm',
 INSERT INTO algorithms VALUES('content','', '', '알고리즘 레퍼런스 구현 중이에요')
 GO
 SELECT * FROM algorithms
-SELECT * FROM basicAlgorithm
+SELECT * FROM test
+SELECT * FROM hello
 
+SELECT * FROM basicAlgorithm
+INSERT INTO test VALUES('title', '', '', 테스트ㅎㅎ)
+UPDATE algorithms SET tableName='ㅡㅡ뭔데' WEHRE _type='sub' AND tableName='HELLO'
 /* 
 drop table algorithms
+drop table test
+drop table undefined
 DELETE FROM algorithms;
 DELETE FROM basicAlgorithm;
 DELETE FROM algorithms WHERE _type = 'title';
