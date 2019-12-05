@@ -1,13 +1,6 @@
-#include <iostream>
-using namespace std;
-
-int main() {
+#include <stdio.h>
+int main(void){
   int a,b;
-  cin >> a >> b;
-  cout << a + b;
-  return 0;
+  scanf("%d%d",&a,&b);
+  printf("%d",a+b);
 }
-
-
-
-

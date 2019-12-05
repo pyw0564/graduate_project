@@ -2,6 +2,7 @@ const config = require('./data')
 const express = require('express')
 const router = express.Router()
 const sql = require('mssql')
+const crypto = require('crypto')
 const bodyParser = require('body-parser');
 const sqlQuery = config.sqlQuery
 
@@ -22,7 +23,10 @@ router.post('/login', async function(req, res) {
     return res.send(redirect_main('아이디가 입력되지 않았습니다'))
   if (pw == '' || pw == null || pw == undefined)
     return res.send(redirect_main('패스워드가 입력되지 않았습니다'))
-  let ret = await sqlQuery(`SELECT * FROM Users WHERE id='${id}' AND pw='${pw}'`)
+  let pwHash = crypto.createHash('sha512').update(pw).digest('base64');
+  let query = `SELECT * FROM Users WHERE id='${id}' AND pw='${pwHash}'`
+  console.log(query)
+  let ret = await sqlQuery(`SELECT * FROM Users WHERE id='${id}' AND pw='${pwHash}'`)
   if (ret.recordset.length) {
     req.session._id = id
     return res.redirect('/')
@@ -55,7 +59,10 @@ router.post('/register', async function(req, res) {
   if (phone == '' || phone == null || phone == undefined)
     return res.send(redirect_url('휴대폰이 입력되지 않았습니다', '/register'))
 
-  let ret = await sqlQuery(`INSERT INTO Users VALUES('${id}', '${pw}', '${name}', '${phone}')`)
+  let pwHash = crypto.createHash('sha512').update(pw).digest('base64');
+  let query = `INSERT INTO Users VALUES('${id}', '${pwHash}', '${name}', '${phone}')`
+  let ret = await sqlQuery(query)
+  console.log(query)
   if (ret.rowsAffected) {
     await sqlQuery(`INSERT INTO Rank(id) VALUES('${id}')`)
     return res.send(redirect_main('회원가입 완료'))

@@ -99,3 +99,7 @@ INSERT INTO basicAlgorithm VALUES('content','', '', '기본적인 알고리즘 좋아요')
 
 GO
 
+ALTER TABLE Users ALTER COLUMN pw nvarchar(MAX) NOT NULL
+
+ALTER TABLE table_name 
+ALTER COLUMN column_name new_data_type(size);
